@@ -47,12 +47,12 @@ $lots = [
 ];
 
 function space_price($price) {
-    ceil($price);
-    if ($price < 1000) {
-        return $price .= "₽";
+    $around_price = ceil($price);
+    if ($around_price < 1000) {
+        return $around_price ." ₽";
     } else {
-        $make_space = number_format ($price, " ");
-        return $make_space .= "₽";
+        $make_space = number_format ($around_price, 0, 0, " ");
+        return $make_space ." ₽";
     }
 };
 ?>
@@ -131,7 +131,7 @@ function space_price($price) {
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=space_price($lots['price']); ?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=space_price($value['price']); ?></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
