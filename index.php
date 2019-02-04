@@ -45,6 +45,16 @@ $lots = [
         'url_img' => 'img/lot-6.jpg'
     ]
 ];
+
+function space_price($price, $step_in_price) {
+    ceil($price);
+    if ($price < 1000) {
+        return $price .= "₽";
+    } else {
+        $make_space = number_format ($price, " ");
+        return $make_space .= "₽";
+    }
+};
 ?>
 
 <!DOCTYPE html>
@@ -95,13 +105,12 @@ $lots = [
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
-            <?php $index = 0; while ($index < $count_categories): ?>
+            <?php foreach ($categories as $key => $value): ?>
             <!--заполните этот список из массива категорий-->
             <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html"><?=$categories[$index];?></a>
+                <a class="promo__link" href="pages/all-lots.html"><?=$value; ?></a>
             </li>
-            <?php $index = $index + 1; ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </ul>
     </section>
     <section class="lots">
@@ -139,13 +148,12 @@ $lots = [
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-            <?php $index = 0; while ($index < $count_categories): ?>
+            <?php foreach ($categories as $key => $value): ?>
             <!--заполните этот список из массива категорий-->
             <li class="nav__item">
-                <a href="pages/all-lots.html"><?=$categories[$index];?></a>
+                <a href="pages/all-lots.html"><?=$value; ?></a>
             </li>
-            <?php $index = $index + 1; ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
