@@ -46,7 +46,7 @@ $lots = [
     ]
 ];
 
-function space_price($price, $step_in_price) {
+function space_price($price) {
     ceil($price);
     if ($price < 1000) {
         return $price .= "₽";
@@ -131,7 +131,7 @@ function space_price($price, $step_in_price) {
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$value['price']; ?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=space_price($lots['price']); ?><b class="rub">р</b></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
