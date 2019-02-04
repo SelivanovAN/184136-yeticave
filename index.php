@@ -45,6 +45,15 @@ $lots = [
         'url_img' => 'img/lot-6.jpg'
     ]
 ];
+
+function space_price($price) {
+    $around_price = ceil($price);
+    if ($around_price > 1000) {
+        $make_space = number_format ($around_price, 0, 0, " ");
+        return $make_space ." ₽";
+    }
+    return $around_price ." ₽";
+};
 ?>
 
 <!DOCTYPE html>
@@ -95,13 +104,12 @@ $lots = [
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
-            <?php $index = 0; while ($index < $count_categories): ?>
+            <?php foreach ($categories as $key => $value): ?>
             <!--заполните этот список из массива категорий-->
             <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html"><?=$categories[$index];?></a>
+                <a class="promo__link" href="pages/all-lots.html"><?=$value; ?></a>
             </li>
-            <?php $index = $index + 1; ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </ul>
     </section>
     <section class="lots">
@@ -122,7 +130,7 @@ $lots = [
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$value['price']; ?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=space_price($value['price']); ?></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
@@ -139,13 +147,12 @@ $lots = [
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-            <?php $index = 0; while ($index < $count_categories): ?>
+            <?php foreach ($categories as $key => $value): ?>
             <!--заполните этот список из массива категорий-->
             <li class="nav__item">
-                <a href="pages/all-lots.html"><?=$categories[$index];?></a>
+                <a href="pages/all-lots.html"><?=$value; ?></a>
             </li>
-            <?php $index = $index + 1; ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
