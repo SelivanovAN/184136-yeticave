@@ -48,12 +48,11 @@ $lots = [
 
 function space_price($price) {
     $around_price = ceil($price);
-    if ($around_price < 1000) {
-        return $around_price ." ₽";
-    } else {
+    if ($around_price > 1000) {
         $make_space = number_format ($around_price, 0, 0, " ");
         return $make_space ." ₽";
     }
+    return $around_price ." ₽";
 };
 ?>
 
