@@ -57,9 +57,14 @@ function space_price($price) {
     return $around_price ." ₽";
 };
 
+function check_hakers($typing) {
+    $haker = strip_tags($typing);
+    return $haker;
+};
+
 $content_main = include_template ('index.php', ['categories' => $categories, 'lots'=>$lots]);
 $layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories' => $categories, 'content_main' => $content_main]);
 
 print ($layout);
-print ($main);
+
 ?>
