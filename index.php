@@ -1,23 +1,6 @@
 <?php
 include_once 'functions.php';
 
-function include_template($name, $data) {
-    $name = 'templates/' . $name;
-    $result = '';
-
-    if (!is_readable($name)) {
-        return $result;
-    }
-
-    ob_start();
-    extract($data);
-    require $name;
-
-    $result = ob_get_clean();
-
-    return $result;
-};
-
 $is_auth = rand(0, 1);
 
 $user_name = 'Александр'; // укажите здесь ваше имя
