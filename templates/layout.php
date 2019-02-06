@@ -42,7 +42,7 @@
 </header>
 
 <main class="container">
-    <?=$content_index; ?>
+    <?=$content_main; ?>
 </main>
 </div>
 

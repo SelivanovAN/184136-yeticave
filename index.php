@@ -57,9 +57,8 @@ function space_price($price) {
     return $around_price ." ₽";
 };
 
-
-$layout = include_template ('layout.php', ['title' => $title, '$is_auth' => $is_auth, 'user_name' => $user_name, 'categories' => $categories, $content_index]);
-$main = include_template ('index.php', ['categories' => $categories, 'lots'=>$lots]);
+$content_main = include_template ('index.php', ['categories' => $categories, 'lots'=>$lots]);
+$layout = include_template ('layout.php', ['title' => $title, '$is_auth' => $is_auth, 'user_name' => $user_name, 'categories' => $categories, 'content_main' => $content_main]);
 
 print ($layout);
 print ($main);
