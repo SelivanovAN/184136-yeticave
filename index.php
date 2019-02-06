@@ -1,4 +1,8 @@
 <?php
+$title = 'Главная';
+// print ('layout.php');
+// print ('index.php');
+
 include_once 'functions.php';
 
 $is_auth = rand(0, 1);
@@ -56,4 +60,7 @@ function space_price($price) {
     }
     return $around_price ." ₽";
 };
+
+include_templates ('layout.php', 'categories' => $categories, 'title' => $title);
+include_templates ('index.php', 'lots'=>$lots);
 ?>
