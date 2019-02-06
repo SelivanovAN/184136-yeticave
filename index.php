@@ -1,7 +1,5 @@
 <?php
 $title = 'Главная';
-// print ('layout.php');
-// print ('index.php');
 
 include_once 'functions.php';
 
@@ -10,8 +8,6 @@ $is_auth = rand(0, 1);
 $user_name = 'Александр'; // укажите здесь ваше имя
 
 $categories = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
-
-$count_categories = count($categories);
 
 $lots = [
     [
@@ -61,6 +57,10 @@ function space_price($price) {
     return $around_price ." ₽";
 };
 
-include_templates ('layout.php', 'categories' => $categories, 'title' => $title);
-include_templates ('index.php', 'lots'=>$lots);
+
+$layout = include_template ('layout.php', ['title' => $title, '$is_auth' => $is_auth, 'user_name' => $user_name, 'categories' => $categories, $content_index]);
+$main = include_template ('index.php', ['categories' => $categories, 'lots'=>$lots]);
+
+print ($layout);
+print ($main);
 ?>
