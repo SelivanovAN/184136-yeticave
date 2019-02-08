@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set("Europe/Moscow");
+setlocale(LC_ALL, 'ru_RU');
 $title = 'Главная';
 
 include_once 'functions.php';
@@ -61,6 +63,14 @@ function check_hakers($typing) {
     $haker = strip_tags($typing);
     return $haker;
 };
+
+function show_date() {
+    $date_now = date_create("now");
+    $date_next = date_create("tomorrow");
+    $date_diff = date_diff($date_next, $date_now);
+    $date_count = date_interval_format($date_diff, "%h:%i");
+    return $date_count;
+}
 
 $content_main = include_template ('index.php', ['categories' => $categories, 'lots'=>$lots]);
 $layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories' => $categories, 'content_main' => $content_main]);
