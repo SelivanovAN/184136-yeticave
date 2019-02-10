@@ -40,7 +40,5 @@ email CHAR(128) NOT NULL UNIQUE,
 name CHAR,
 password CHAR(64),
 avatar TEXT,
-contact CHAR,
-date_lot_creat TIMESTAMP,
-id_bet INT
+contact CHAR
 );
