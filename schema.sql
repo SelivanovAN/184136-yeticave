@@ -18,6 +18,9 @@ user_win INT,
 id_category INT
 );
 
+CREATE INDEX n_lots ON lots(name);
+CREATE INDEX d_lots ON lots(description);
+
 CREATE TABLE bets (
 id INT AUTO_INCREMENT PRIMARY KEY,
 date_bet TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -36,3 +39,5 @@ contact CHAR,
 date_lot_creat TIMESTAMP,
 id_bet INT
 );
+
+CREATE UNIQUE INDEX email ON users(email);
