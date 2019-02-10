@@ -21,9 +21,9 @@ INSERT INTO lots (date_create, name, description, picture, start_price, date_clo
 INSERT INTO lots (date_create, name, description, picture, start_price, date_close, step_bet, id_user, user_win, id_category)
  VALUES ("2018-01-01 01:01:00", "Helmet", "Маска Oakley Canopy", "img/lot-6.jpg", 5400, "2018-01-01 01:01:00", 100, 1, 1, 6);
 
-INSERT INTO bets (date_bet, price_buy, id_user, id_lot) VALUES ("2019-06-06 01:01:00", 15500, 1, 1);
-INSERT INTO bets (date_bet, price_buy, id_user, id_lot) VALUES ("2019-08-08 01:01:00", 200500, 1, 2);
-INSERT INTO bets (date_bet, price_buy, id_user, id_lot) VALUES (NULL, 9500, 1, 3);
-INSERT INTO bets (date_bet, price_buy, id_user, id_lot) VALUES (NULL, 15500, 2, 4);
-INSERT INTO bets (date_bet, price_buy, id_user, id_lot) VALUES (NULL, 10500, 2, 5);
-INSERT INTO bets (date_bet, price_buy, id_user, id_lot) VALUES ("2019-07-07 01:01:00", 6500, 2, 6);
+INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-06-06 01:01:00", 15500, 1, 1);
+INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-08-08 01:01:00", 200500, 1, 2);
+INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-02-10 01:01:00", 9500, 1, 3);
+INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-02-10 01:01:00", 15500, 2, 4);
+INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-02-09 01:01:00", 10500, 2, 5);
+INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-07-07 01:01:00", 6500, 2, 6);
