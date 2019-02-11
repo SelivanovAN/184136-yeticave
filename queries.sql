@@ -32,4 +32,4 @@ SELECT * FROM category ORDER BY name ASC;
 SELECT l.id, l.name, l.start_price, l.picture, b.price_buy, c.name, l.date_create, l.date_close FROM lots l JOIN category c ON l.id_category = c.id_lot JOIN bets b ON l.id = b.id_lot ORDER BY l.date_create DESC;
 SELECT l.id, c.name FROM lots l JOIN category c ON l.id_category = c.id_lot;
 UPDATE lots SET name = "Snowboard-test" WHERE id = 1;
-SELECT b.date_place, l.name FROM bets b JOIN lots l ON l.id = b.id_lot ORDER BY b.date_place DESC;
+SELECT b.id, b.date_place, l.name FROM bets b JOIN lots l ON l.id = b.id_lot ORDER BY b.date_place DESC;
