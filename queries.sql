@@ -27,3 +27,9 @@ INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-02-10 01
 INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-02-10 01:01:00", 15500, 2, 4);
 INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-02-09 01:01:00", 10500, 2, 5);
 INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-07-07 01:01:00", 6500, 2, 6);
+
+SELECT * FROM category ORDER BY name ASC;
+SELECT l.id, l.name, l.start_price, l.picture, b.price_buy, c.name, l.date_create, l.date_close FROM lots l JOIN category c ON l.id_category = c.id_lot JOIN bets b ON l.id = b.id_lot ORDER BY l.date_create DESC;
+SELECT l.id, c.name FROM lots l JOIN category c ON l.id_category = c.id_lot;
+UPDATE lots SET name = "Snowboard-test" WHERE id = 1;
+SELECT b.date_place, l.name FROM bets b JOIN lots l ON l.id = b.id_lot ORDER BY b.date_place DESC;
