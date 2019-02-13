@@ -50,13 +50,12 @@ $lots = [
     ]
 ];
 
-$db = require_once 'openserver/phpmyadmin/db_structure.php';
+// $db = require_once 'openserver/phpmyadmin/db_structure.php';
 
 $link = mysqli_connect('localhost', 'root', '', '184136_yeticave');
 mysqli_set_charset($link, "utf8");
 
 $categories_select = [];
-$content = '';
 
 if($link) {
     $sql = 'SELECT * FROM category ORDER BY name ASC';
@@ -65,10 +64,10 @@ if($link) {
     if ($result_select) {
         $categories_select = mysqli_fetch_all($result_select, MYSQLI_ASSOC);
     } else {
-        return print ('error');
+        print ('error');
     }
 } else {
-    return print ('error');
+    print ('error');
 }
 
 function space_price($price) {
@@ -94,7 +93,7 @@ function show_date() {
 }
 
 $content_main = include_template ('index.php', ['categories_select' => $categories_select, 'lots'=>$lots]);
-$layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories' => $categories, 'content_main' => $content_main]);
+$layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
 
 print ($layout);
 
