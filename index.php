@@ -20,10 +20,12 @@ if($link) {
     if ($result_select) {
         $categories_select = mysqli_fetch_all($result_select, MYSQLI_ASSOC);
     } else {
-        print ('error');
+        print ('Произошла ошибка подключения, не удалось подключиться к серверу! Обратитесь к администратору, либо попробуйте снова.');
+        die();
     }
 } else {
-    print ('error');
+    print ('Произошла ошибка подключения, не удалось подключиться к серверу! Обратитесь к администратору, либо попробуйте снова.');
+    die();
 }
 
 if($link) {
