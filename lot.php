@@ -11,7 +11,6 @@ $is_auth = rand(0, 1);
 $user_name = 'Александр'; // укажите здесь ваше имя
 
 $categories_select = [];
-$lots_select = [];
 
 if($link) {
     $categories_sql = 'SELECT * FROM category ORDER BY name ASC';
@@ -29,11 +28,22 @@ if($link) {
 }
 
 if($link) {
-    $lots_sql = 'SELECT l.id, l.name, l.start_price, l.picture, MAX(b.price_buy), MAX(c.name), l.date_create, l.date_close, l.description FROM lots l JOIN category c ON l.id_category = c.id_lot JOIN bets b ON l.id = b.id_lot GROUP BY l.id ORDER BY l.date_create DESC';
-    $result_select = mysqli_query($link, $lots_sql);
+
+    if (!isset($_GET['value_id'])) {
+            $lot_id = 0;
+        } else {
+            $lot_id = (int)$_GET['value_id'];
+        }
+
+    $lot_sql = 'SELECT l.id, l.name, l.start_price, l.picture, MAX(b.price_buy), MAX(c.name), l.date_create, l.description, l.step_bet, l.date_close FROM lots l JOIN category c ON l.id_category = c.id_lot JOIN bets b ON l.id = b.id_lot WHERE l.id = '.$lot_id.' GROUP BY l.id';
+    $result_select = mysqli_query($link, $lot_sql);
 
     if ($result_select) {
-        $lots_select = mysqli_fetch_all($result_select, MYSQLI_ASSOC);
+        $lot_select = mysqli_fetch_array($result_select, MYSQLI_ASSOC);
+
+        if (!$lot_select) {
+            http_response_code(404);
+        }
 
     } else {
         print ('Произошла ошибка при выполнении запроса! Обратитесь к администратору, либо попробуйте снова.');
@@ -44,7 +54,12 @@ if($link) {
     die();
 }
 
-$content_main = include_template ('index.php', ['categories_select' => $categories_select, 'lots_select'=>$lots_select]);
+if ($lot_select) {
+    $content_main = include_template ('lot.php', ['categories_select' => $categories_select, 'lot_select' => $lot_select]);
+} else {
+    $content_main = 'Ошибка 404';
+}
+
 $layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
 
 print ($layout);
