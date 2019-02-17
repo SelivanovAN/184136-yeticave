@@ -23,11 +23,9 @@ function show_date() {
 };
 
 function show_date_close($date) {
-    $date_now = date_create("now");
-    $date_next = date_create($date);
-    $date_diff = date_diff($date_next, $date_now);
-    $date_count = date_interval_format($date_diff, "%h:%i");
-    return $date_count;
+    $date_now = strtotime("now");
+    $date_next = strtotime($date);
+    return floor(($date_next - $date_now) / 3600) . ':' . floor(($date_next - $date_now) % 3600 / 60);
 };
 
 function include_template($name, $data) {
