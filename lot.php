@@ -57,7 +57,7 @@ if($link) {
 if ($lot_select) {
     $content_main = include_template ('lot.php', ['categories_select' => $categories_select, 'lot_select' => $lot_select]);
 } else {
-    $content_main = 'Ошибка 404';
+    $content_main = include_template ('error.php', ['categories_select' => $categories_select, 'lot_select' => $lot_select]);
 }
 
 $layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
