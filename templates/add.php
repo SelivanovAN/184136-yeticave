@@ -9,7 +9,7 @@
           <?php endforeach; ?>
       </ul>
     </nav>
-    <form class="form form--add-lot container form--invalid" action="https://echo.htmlacademy.ru" method="post"> <!-- form--invalid -->
+    <form class="form form--add-lot container form--invalid" action="/add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
       <h2>Добавление лота</h2>
       <div class="form__container-two">
         <div class="form__item form__item--invalid"> <!-- form__item--invalid -->
@@ -20,13 +20,9 @@
         <div class="form__item">
           <label for="category">Категория</label>
           <select id="category" name="category" required>
-            <option>Выберите категорию</option>
-            <option>Доски и лыжи</option>
-            <option>Крепления</option>
-            <option>Ботинки</option>
-            <option>Одежда</option>
-            <option>Инструменты</option>
-            <option>Разное</option>
+              <?php foreach ($categories_select as $value): ?>
+                  <option><?=$value['name']; ?></option>
+              <?php endforeach; ?>
           </select>
           <span class="form__error">Выберите категорию</span>
         </div>
@@ -45,7 +41,7 @@
           </div>
         </div>
         <div class="form__input-file">
-          <input class="visually-hidden" type="file" id="photo2" value="">
+          <input class="visually-hidden" type="file" name="file-upload" id="photo2" value="">
           <label for="photo2">
             <span>+ Добавить</span>
           </label>
