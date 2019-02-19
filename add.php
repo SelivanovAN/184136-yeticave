@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $filename = uniqid() . '.jpg';
         $jpg['path'] = $filename;
-        move_uploaded_file($_FILES['file-upload']['tmp_name'], 'templates/' . $filename);
+        move_uploaded_file($_FILES['file-upload']['tmp_name'], 'img/' . $filename);
 
         $sql = 'INSERT INTO lots (id, date_create, name, description, picture, start_price, date_close, step_bet, id_user, id_category, path)
         VALUES (1, NOW(), ?, ?, ?, ?, ?, ?, 1, ?, ?)';
