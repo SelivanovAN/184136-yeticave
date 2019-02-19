@@ -28,7 +28,7 @@ if($link) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $jpg = $_POST['gif'];
+        $jpg = $_POST['jpg'];
 
         $filename = uniqid() . '.jpg';
         $jpg['path'] = $filename;
