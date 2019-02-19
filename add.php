@@ -28,16 +28,16 @@ if($link) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $jpg = $_POST['jpg'];
+        $jpg = $_POST;
 
         $filename = uniqid() . '.jpg';
-        $jpg['path'] = $filename;
+        $jpg['jpg'] = $filename;
         move_uploaded_file($_FILES['file-upload']['tmp_name'], 'img/' . $filename);
 
-        $sql = 'INSERT INTO lots (id, date_create, name, description, picture, start_price, date_close, step_bet, id_user, id_category, path)
+        $sql = 'INSERT INTO lots (id, date_create, name, description, picture, start_price, date_close, step_bet, id_user, id_category)
         VALUES (1, NOW(), ?, ?, ?, ?, ?, ?, 1, ?, ?)';
 
-        $stmt = db_get_prepare_stmt($link, $sql, [$jpg['name'], $jpg['category'], $jpg['description'], $jpg['start_price'],  $jpg['step_bet'], $jpg['date_close'],  $jpg['path']]);
+        $stmt = db_get_prepare_stmt($link, $sql, [$jpg['name'], $jpg['description'], $jpg['jpg'], $jpg['start_price'], $jpg['date_close'], $jpg['step_bet'], $jpg['category']]);
         $res = mysqli_stmt_execute($stmt);
 
         if ($res) {
