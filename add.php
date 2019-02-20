@@ -39,22 +39,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $stmt = db_get_prepare_stmt($link, $sql, [$jpg['name'], $jpg['description'], $jpg['path'], $jpg['start_price'], $jpg['date_close'], $jpg['step_bet'], $jpg['category']]);
         $res = mysqli_stmt_execute($stmt);
-
+/*
         var_dump(mysqli_error($link));
-        die();
+        die();*/
+/*
+        var_dump($jpg);
+        die();*/
 
         if ($res) {
             $jpg_id = mysqli_insert_id($link);
 
-            header("Location: add.php?id=" . $jpg_id);
+            header("Location: lot.php?id=" . $jpg_id);
             die();
         }
         else {
-            $content_error = include_template ('error.php', ['categories_select' => $categories_select, 'lot_select' => $lot_select]);
+            $content_error = include_template ('error.php', ['categories_select' => $categories_select]);
         }
     }
 
-$content_main = include_template ('add.php', ['categories_select' => $categories_select, 'lot_select' => $lot_select]);
+$content_main = include_template ('add.php', ['categories_select' => $categories_select]);
 
 $layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
 

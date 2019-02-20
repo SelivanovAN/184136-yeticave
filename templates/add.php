@@ -20,8 +20,9 @@
         <div class="form__item">
           <label for="category">Категория</label>
           <select id="category" name="jpg[category]" required>
+              <option value="">Выберите категорию</option>
               <?php foreach ($categories_select as $value): ?>
-                  <option id="<?=$categories_select['id']; ?>"><?=$value['name']; ?></option>
+                  <option value="<?=$value['id']; ?>"><?=$value['name']; ?></option>
               <?php endforeach; ?>
           </select>
           <span class="form__error">Выберите категорию</span>
