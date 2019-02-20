@@ -1,9 +1,9 @@
-INSERT INTO category (name,id_lot) VALUES ("доски и лыжи", 1);
-INSERT INTO category (name,id_lot) VALUES ("крепления", 2);
-INSERT INTO category (name,id_lot) VALUES ("ботинки", 3);
-INSERT INTO category (name,id_lot) VALUES ("одежда", 4);
-INSERT INTO category (name,id_lot) VALUES ("инструменты", 5);
-INSERT INTO category (name,id_lot) VALUES ("разное", 6);
+INSERT INTO category (name, id_lot) VALUES ("доски и лыжи", 1);
+INSERT INTO category (name, id_lot) VALUES ("крепления", 2);
+INSERT INTO category (name, id_lot) VALUES ("ботинки", 3);
+INSERT INTO category (name, id_lot) VALUES ("одежда", 4);
+INSERT INTO category (name, id_lot) VALUES ("инструменты", 5);
+INSERT INTO category (name, id_lot) VALUES ("разное", 6);
 
 INSERT INTO users (email, name, password, avatar, contact) VALUES ("alex@mail.ru", "Alex", 123, "pusto", "Moscow");
 INSERT INTO users (email, name, password, avatar, contact) VALUES ("oleg@mail.ru", "Oleg", 1234, "pusto", "Piter");

@@ -44,9 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $jpg_id = mysqli_insert_id($link);
 
             header("Location: add.php?id=" . $jpg_id);
+            die();
         }
         else {
-            $content_main = include_template ('error.php', ['categories_select' => $categories_select, 'lot_select' => $lot_select]);
+            $content_error = include_template ('error.php', ['categories_select' => $categories_select, 'lot_select' => $lot_select]);
         }
     }
 

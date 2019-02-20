@@ -35,7 +35,7 @@ if($link) {
             $lot_id = (int)$_GET['value_id'];
         }
 
-    $lot_sql = 'SELECT l.id, l.name, l.start_price, l.picture, MAX(b.price_buy), MAX(c.name), l.date_create, l.description, l.step_bet, l.date_close FROM lots l JOIN category c ON l.id_category = c.id_lot JOIN bets b ON l.id = b.id_lot WHERE l.id = '.$lot_id.' GROUP BY l.id';
+    $lot_sql = 'SELECT l.id, l.name, l.start_price, l.picture_link, MAX(b.price_buy), MAX(c.name), l.date_create, l.description, l.step_bet, l.date_close FROM lots l JOIN category c ON l.id_category = c.id_lot JOIN bets b ON l.id = b.id_lot WHERE l.id = '.$lot_id.' GROUP BY l.id';
     $result_select = mysqli_query($link, $lot_sql);
 
     if ($result_select) {
