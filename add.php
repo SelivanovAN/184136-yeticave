@@ -40,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = db_get_prepare_stmt($link, $sql, [$jpg['name'], $jpg['description'], $jpg['path'], $jpg['start_price'], $jpg['date_close'], $jpg['step_bet'], $jpg['category']]);
         $res = mysqli_stmt_execute($stmt);
 
+        var_dump(mysqli_error($link));
+        die();
+
         if ($res) {
             $jpg_id = mysqli_insert_id($link);
 
