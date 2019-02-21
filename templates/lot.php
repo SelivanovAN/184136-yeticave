@@ -34,7 +34,11 @@
                 <?php endif; ?>
               </div>
               <div class="lot-item__min-cost">
-                Мин. ставка <span><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?></span>
+                  <?php if ($lot_select['MAX(b.price_buy)']): ?>
+                      Мин. ставка <span><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?></span>
+                  <?php else: ?>
+                      Мин. ставка <span><?=space_price(check_hakers($lot_select['start_price'] + $lot_select['step_bet'])); ?></span>
+                  <?php endif; ?>
               </div>
             </div>
             <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">

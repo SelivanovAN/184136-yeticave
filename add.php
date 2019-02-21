@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die();
         }
         else {
-            $content_error = include_template ('error.php', ['categories_select' => $categories_select]);
+            $content_main = include_template ('error.php', ['categories_select' => $categories_select]);
         }
     }
 
