@@ -13,6 +13,9 @@
       <h2>Добавление лота</h2>
       <div class="form__container-two">
         <div class="form__item form__item--invalid"> <!-- form__item--invalid -->
+        <?php $classname = isset($errors['jpg[name]']) ? "form__input--error" : "";
+        $value = isset($jpg[name]) ? $jpg[name] : ""; ?>
+
           <label for="lot-name">Наименование</label>
           <input id="lot-name" type="text" name="jpg[name]" placeholder="Введите наименование лота" required>
           <span class="form__error">Введите наименование лота</span>
@@ -29,9 +32,13 @@
         </div>
       </div>
       <div class="form__item form__item--wide">
+        <?php $classname = isset($errors['jpg[description]']) ? "form__input--error" : "";
+        $value = isset($jpg['description']) ? $jpg['description'] : ""; ?>
+
         <label for="message">Описание</label>
-        <textarea id="message" name="jpg[description]" placeholder="Напишите описание лота" required></textarea>
-        <span class="form__error">Напишите описание лота</span>
+        <textarea id="message" class="<?=$classname;?>" name="jpg[description]" placeholder="Напишите описание лота" required><?=$value;?></textarea>
+        <!--<span class="form__error">Напишите описание лота</span>-->
+        <span class="form__error <?=$classname;?>">Напишите описание лота</span>
       </div>
       <div class="form__item form__item--file"> <!-- form__item--uploaded -->
         <label>Изображение</label>

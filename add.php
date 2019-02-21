@@ -30,28 +30,73 @@ if($link) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $jpg = $_POST['jpg'];
 
-        $filename = uniqid() . '.jpg';
-        $jpg['path'] = 'img/' .$filename;
-        move_uploaded_file($_FILES['file-upload']['tmp_name'], 'img/' . $filename);
+        $required = ['jpg[name]', 'jpg[category]', 'jpg[description]', 'file-upload', 'jpg[start_price]', 'jpg[step_bet]', 'jpg[date_close]'];
+        $dict = ['jpg[name]' => 'Название', 'jpg[category]' => 'Категория', 'jpg[description]' => 'Описание', 'file-upload' => 'Фотка', 'jpg[start_price]' => 'Начальная цена', 'jpg[step_bet]' => 'Шаг ставки', 'jpg[date_close]' => 'Дата окончания'];
+        $errors = [];
 
-        $sql = 'INSERT INTO lots (date_create, name, description, picture_link, start_price, date_close, step_bet, id_user, id_category)
-        VALUES (NOW(), ?, ?, ?, ?, ?, ?, 1, ?)';
+        foreach ($required as $key) {
+            if (empty($_POST['jpg'][$key])) {
+                $errors[$key] = 'Это поле надо заполнить';
+            }
+        }
 
-        $stmt = db_get_prepare_stmt($link, $sql, [$jpg['name'], $jpg['description'], $jpg['path'], $jpg['start_price'], $jpg['date_close'], $jpg['step_bet'], $jpg['category']]);
-        $res = mysqli_stmt_execute($stmt);
+        if (isset($_FILES['file-upload']['name'])) {
+    		$tmp_name = $_FILES['file-upload']['tmp_name'];
+    		// $path = $_FILES['file-upload']['name'];
 
-        if ($res) {
-            $jpg_id = mysqli_insert_id($link);
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        	$file_type = finfo_file($finfo, $tmp_name);
 
-            header("Location: lot.php?value_id=" . $jpg_id);
-            die();
+            if ($file_type !== "image/jpg") {
+                $errors['file-upload'] = 'Загрузите картинку в формате JPG';
+            }
+            else {
+                $filename = uniqid() . '.jpg';
+                $jpg['path'] = 'img/' .$filename;
+                // move_uploaded_file($_FILES['file-upload']['tmp_name'], 'img/' . $filename);
+                move_uploaded_file($tmp_name, 'img/' . $filename);
+                // $gif['path'] = $path;
+            }
         }
         else {
-            $content_main = include_template ('error.php', ['categories_select' => $categories_select]);
+            $errors['file-upload'] = 'Вы не загрузили файл';
         }
-    }
 
-$content_main = include_template ('add.php', ['categories_select' => $categories_select]);
+        if (count($errors)) {
+            $page_content = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg, 'errors' => $errors, 'dict' => $dict]);
+        }
+        else {
+            $sql = 'INSERT INTO lots (date_create, name, description, picture_link, start_price, date_close, step_bet, id_user, id_category)
+            VALUES (NOW(), ?, ?, ?, ?, ?, ?, 1, ?)';
+
+            $stmt = db_get_prepare_stmt($link, $sql, [$jpg['name'], $jpg['description'], $jpg['path'], $jpg['start_price'], $jpg['date_close'], $jpg['step_bet'], $jpg['category']]);
+            $res = mysqli_stmt_execute($stmt);
+
+                if ($res) {
+                    $jpg_id = mysqli_insert_id($link);
+
+                    header("Location: lot.php?value_id=" . $jpg_id);
+                    die();
+                }
+                else {
+                    $content_main = include_template ('error.php', ['categories_select' => $categories_select]);
+                }
+
+                $page_content = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg]);
+            }
+
+}
+else {
+	$page_content = include_template('add.php', []);
+}
+
+// $content_main = include_template ('add.php', ['categories_select' => $categories_select]);
+/*
+$layout_content = include_template('layout.php', [
+	'content'    => $page_content,
+	'categories' => [],
+	'title'      => 'GifTube - Добавление гифки'
+]);*/
 
 $layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
 
