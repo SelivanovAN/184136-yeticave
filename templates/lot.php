@@ -27,7 +27,11 @@
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
-                <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
+                <?php if ($lot_select['max(b.price_bye)']): ?>
+                    <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
+                <?php else: ?>
+                    <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['start_price'])); ?></span>
+                <?php endif; ?>
               </div>
               <div class="lot-item__min-cost">
                 Мин. ставка <span><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?></span>
