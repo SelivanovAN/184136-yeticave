@@ -57,9 +57,12 @@
       </div>
       <div class="form__container-three">
         <div class="form__item form__item--small">
+            <?php $classname = isset($errors['jpg[start_price]']) ? "form__input--error" : "";
+            $value = isset($jpg['start_price']) ? $jpg['start_price'] : ""; ?>
+
           <label for="lot-rate">Начальная цена</label>
-          <input id="lot-rate" type="number" name="jpg[start_price]" placeholder="0" required>
-          <span class="form__error">Введите начальную цену</span>
+          <input id="lot-rate" class="<?=$classname;?>" type="number" name="jpg[start_price]" placeholder="0" required>
+          <span class="form__error <?=$classname;?>">Введите начальную цену</span>
         </div>
         <div class="form__item form__item--small">
           <label for="lot-step">Шаг ставки</label>
