@@ -8,7 +8,7 @@ mysqli_set_charset($link, "utf8");
 
 $title = 'Лот';
 $is_auth = rand(0, 1);
-$user_name = 'Александр'; // укажите здесь ваше имя
+$user_name = 'Александр';
 
 $categories_select = [];
 
@@ -30,8 +30,8 @@ if($link) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $jpg = $_POST['jpg'];
 
-        $required = ['jpg[name]', 'jpg[category]', 'jpg[description]', 'file-upload', 'jpg[start_price]', 'jpg[step_bet]', 'jpg[date_close]'];
-        $dict = ['jpg[name]' => 'Название', 'jpg[category]' => 'Категория', 'jpg[description]' => 'Описание', 'file-upload' => 'Фотка', 'jpg[start_price]' => 'Начальная цена', 'jpg[step_bet]' => 'Шаг ставки', 'jpg[date_close]' => 'Дата окончания'];
+        $required = ['name', 'category', 'description', 'file-upload', 'start_price', 'step_bet', 'date_close'];
+        $dict = ['name' => 'Название', 'category' => 'Категория', 'description' => 'Описание', 'file-upload' => 'Фотка', 'start_price' => 'Начальная цена', 'step_bet' => 'Шаг ставки', 'date_close' => 'Дата окончания'];
         $errors = [];
 
         foreach ($required as $key) {
@@ -82,12 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $content_main = include_template ('error.php', ['categories_select' => $categories_select]);
                 }
 
-                $page_content = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg]);
+                $content_main = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg]);
             }
 
 }
 else {
-	$page_content = include_template('add.php', []);
+	$content_main = include_template('add.php', ['categories_select' => $categories_select,]);
 }
 
 // $content_main = include_template ('add.php', ['categories_select' => $categories_select]);
