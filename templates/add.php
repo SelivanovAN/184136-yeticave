@@ -17,7 +17,7 @@
         $value = isset($jpg[name]) ? $jpg[name] : ""; ?>
 
           <label for="lot-name">Наименование</label>
-          <input id="lot-name" class="<?=$classname;?> type="text" name="jpg[name]" placeholder="Введите наименование лота" required>
+          <input id="lot-name" class="<?=$classname;?>" type="text" name="jpg[name]" placeholder="Введите наименование лота" required>
           <span class="form__error <?=$classname;?>"><?=$value;?></span>
         </div>
         <div class="form__item">

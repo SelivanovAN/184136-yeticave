@@ -74,8 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($res) {
             $jpg_id = mysqli_insert_id($link);
-            var_dump($jpg_id);
-            die();
+
             header("Location: lot.php?value_id=" . $jpg_id);
             die();
         }
