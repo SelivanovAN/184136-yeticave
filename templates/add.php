@@ -17,7 +17,7 @@
         $value = isset($jpg[name]) ? $jpg[name] : ""; ?>
 
           <label for="lot-name">Наименование</label>
-          <input id="lot-name" class="<?=$classname;?>" type="text" name="jpg[name]" placeholder="Введите наименование лота" required>
+          <input id="lot-name" class="<?=$classname;?>" type="text" name="jpg[name]" placeholder="Введите наименование лота" value="<?=$value;?>" required>
           <span class="form__error <?=$classname;?>"><?=$value;?></span>
         </div>
         <div class="form__item">
@@ -61,7 +61,7 @@
             $value = isset($jpg['start_price']) ? $jpg['start_price'] : ""; ?>
 
           <label for="lot-rate">Начальная цена</label>
-          <input id="lot-rate" class="<?=$classname;?>" type="number" name="jpg[start_price]" placeholder="0" required>
+          <input id="lot-rate" class="<?=$classname;?>" type="number" name="jpg[start_price]" placeholder="0" value="<?=$value;?>" required>
           <span class="form__error <?=$classname;?>"><?=$value;?></span>
         </div>
         <div class="form__item form__item--small">
@@ -69,7 +69,7 @@
             $value = isset($jpg['step_bet']) ? $jpg['step_bet'] : ""; ?>
 
           <label for="lot-step">Шаг ставки</label>
-          <input id="lot-step" class="<?=$classname;?>" type="number" name="jpg[step_bet]" placeholder="0" required>
+          <input id="lot-step" class="<?=$classname;?>" type="number" name="jpg[step_bet]" placeholder="0" value="<?=$value;?>" required>
           <span class="form__error <?=$classname;?>"><?=$value;?></span>
         </div>
         <div class="form__item">
