@@ -13,12 +13,12 @@
       <h2>Добавление лота</h2>
       <div class="form__container-two">
         <div class="form__item form__item--invalid"> <!-- form__item--invalid -->
-        <?php $classname = isset($errors['jpg[name]']) ? "form__input--error" : "";
+        <?php $classname = isset($errors['jpg[name]']) ? "form__item--invalid" : "";
         $value = isset($jpg[name]) ? $jpg[name] : ""; ?>
 
           <label for="lot-name">Наименование</label>
-          <input id="lot-name" type="text" name="jpg[name]" placeholder="Введите наименование лота" required>
-          <span class="form__error">Введите наименование лота</span>
+          <input id="lot-name" class="<?=$classname;?> type="text" name="jpg[name]" placeholder="Введите наименование лота" required>
+          <span class="form__error <?=$classname;?>"><?=$value;?></span>
         </div>
         <div class="form__item">
           <label for="category">Категория</label>
@@ -32,13 +32,13 @@
         </div>
       </div>
       <div class="form__item form__item--wide">
-        <?php $classname = isset($errors['jpg[description]']) ? "form__input--error" : "";
+        <?php $classname = isset($errors['jpg[description]']) ? "form__item--invalid" : "";
         $value = isset($jpg['description']) ? $jpg['description'] : ""; ?>
 
         <label for="message">Описание</label>
         <textarea id="message" class="<?=$classname;?>" name="jpg[description]" placeholder="Напишите описание лота" required><?=$value;?></textarea>
         <!--<span class="form__error">Напишите описание лота</span>-->
-        <span class="form__error <?=$classname;?>">Напишите описание лота</span>
+        <span class="form__error <?=$classname;?>"><?=$value;?></span>
       </div>
       <div class="form__item form__item--file"> <!-- form__item--uploaded -->
         <label>Изображение</label>
@@ -57,17 +57,20 @@
       </div>
       <div class="form__container-three">
         <div class="form__item form__item--small">
-            <?php $classname = isset($errors['jpg[start_price]']) ? "form__input--error" : "";
+            <?php $classname = isset($errors['jpg[start_price]']) ? "form__item--invalid" : "";
             $value = isset($jpg['start_price']) ? $jpg['start_price'] : ""; ?>
 
           <label for="lot-rate">Начальная цена</label>
           <input id="lot-rate" class="<?=$classname;?>" type="number" name="jpg[start_price]" placeholder="0" required>
-          <span class="form__error <?=$classname;?>">Введите начальную цену</span>
+          <span class="form__error <?=$classname;?>"><?=$value;?></span>
         </div>
         <div class="form__item form__item--small">
+            <?php $classname = isset($errors['jpg[step_bet]']) ? "form__item--invalid" : "";
+            $value = isset($jpg['step_bet']) ? $jpg['step_bet'] : ""; ?>
+
           <label for="lot-step">Шаг ставки</label>
-          <input id="lot-step" type="number" name="jpg[step_bet]" placeholder="0" required>
-          <span class="form__error">Введите шаг ставки</span>
+          <input id="lot-step" class="<?=$classname;?>" type="number" name="jpg[step_bet]" placeholder="0" required>
+          <span class="form__error <?=$classname;?>"><?=$value;?></span>
         </div>
         <div class="form__item">
           <label for="lot-date">Дата окончания торгов</label>
