@@ -30,13 +30,14 @@ if($link) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $jpg = $_POST['jpg'];
 
-    $required = ['name', 'category', 'description', 'file-upload', 'start_price', 'step_bet', 'date_close'];
-    $dict = ['name' => 'Название', 'category' => 'Категория', 'description' => 'Описание', 'file-upload' => 'Фотка', 'start_price' => 'Начальная цена', 'step_bet' => 'Шаг ставки', 'date_close' => 'Дата окончания'];
+    $required = ['name', 'category', 'description', 'start_price', 'step_bet', 'date_close'];
+    $dict = ['name' => 'Название', 'category' => 'Категория', 'description' => 'Описание', 'start_price' => 'Начальная цена', 'step_bet' => 'Шаг ставки', 'date_close' => 'Дата окончания'];
     $errors = [];
 
     foreach ($required as $key) {
         if (empty($_POST['jpg'][$key])) {
             $errors[$key] = 'Это поле надо заполнить';
+
         }
     }
 
@@ -46,8 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
     	$file_type = finfo_file($finfo, $tmp_name);
-
-        if ($file_type !== "image/jpg") {
+        var_dump($file_type != "image/jpg" || $file_type != "image/jpeg" || $file_type != "image/png");
+        die();
+        if ($file_type !== "image/jpg" || $file_type !== "image/jpeg" || $file_type !== "image/png") {
             $errors['file-upload'] = 'Загрузите картинку в формате JPG';
         }
         else {
@@ -61,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     else {
         $errors['file-upload'] = 'Вы не загрузили файл';
     }
+
 
     if (count($errors)) {
         $content_main = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg, 'errors' => $errors, 'dict' => $dict]);
@@ -80,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         else {
             $content_main = include_template ('error.php', ['categories_select' => $categories_select]);
+
         }
 
         $content_main = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg]);
