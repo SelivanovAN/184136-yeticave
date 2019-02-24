@@ -35,13 +35,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = [];
 
     foreach ($required as $key) {
-        if (empty($_POST['jpg'][$key])) {
+        if (empty($jpg[$key])) {
             $errors[$key] = 'Это поле надо заполнить';
+        }
+    }
+    if (isset($jpg['date_close'])) {
+        $date_close = strtotime($jpg['date_close']);
+        $date_diff = $date_close - time();
 
+        if ($date_diff < (60*60*24)) {
+            $errors['date_close'] = 'Дата должна быть больше текущей как минимум на одни сутки';
         }
     }
 
-    if (isset($_FILES['file-upload']['name'])) {
+    if (isset($_FILES['file-upload']['name']) && $_FILES['file-upload']['name']) {
 		$tmp_name = $_FILES['file-upload']['tmp_name'];
 		// $path = $_FILES['file-upload']['name'];
 
