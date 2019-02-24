@@ -47,10 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
     	$file_type = finfo_file($finfo, $tmp_name);
-        var_dump($file_type != "image/jpg" || $file_type != "image/jpeg" || $file_type != "image/png");
-        die();
-        if ($file_type !== "image/jpg" || $file_type !== "image/jpeg" || $file_type !== "image/png") {
-            $errors['file-upload'] = 'Загрузите картинку в формате JPG';
+
+        if ($file_type !== "image/jpg" && $file_type !== "image/jpeg" && $file_type !== "image/png") {
+            $errors['file-upload'] = 'Загрузите картинку в формате JPG / JPEG / PNG';
         }
         else {
             $filename = uniqid() . '.jpg';
