@@ -14,7 +14,7 @@
       <div class="lot-item__content">
         <div class="lot-item__left">
           <div class="lot-item__image">
-            <img src="<?=check_hakers($lot_select['picture']); ?>" width="730" height="548" alt="Сноуборд">
+            <img src="<?=check_hakers($lot_select['picture_link']); ?>" width="730" height="548" alt="Сноуборд">
           </div>
           <p class="lot-item__category">Категория: <span><?=check_hakers($lot_select['MAX(c.name)']); ?></span></p>
           <p class="lot-item__description"><?=check_hakers($lot_select['description']); ?></p>
@@ -27,10 +27,18 @@
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
-                <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
+                <?php if ($lot_select['max(b.price_bye)']): ?>
+                    <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
+                <?php else: ?>
+                    <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['start_price'])); ?></span>
+                <?php endif; ?>
               </div>
               <div class="lot-item__min-cost">
-                Мин. ставка <span><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?></span>
+                  <?php if ($lot_select['MAX(b.price_buy)']): ?>
+                      Мин. ставка <span><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?></span>
+                  <?php else: ?>
+                      Мин. ставка <span><?=space_price(check_hakers($lot_select['start_price'] + $lot_select['step_bet'])); ?></span>
+                  <?php endif; ?>
               </div>
             </div>
             <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">

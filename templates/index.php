@@ -21,7 +21,7 @@
         <!--заполните этот список из массива с товарами-->
         <li class="lots__item lot">
             <div class="lot__image">
-                <img src="<?=check_hakers($value['picture']); ?>" width="350" height="260" alt="">
+                <img src="<?=check_hakers($value['picture_link']); ?>" width="350" height="260" alt="">
             </div>
             <div class="lot__info">
                 <span class="lot__category"><?=check_hakers($value['MAX(c.name)']); ?></span>
