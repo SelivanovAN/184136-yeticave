@@ -68,11 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (mysqli_num_rows($res) > 0) {
             $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
-            //$content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'reg' => $reg, 'errors' => $errors, 'dict' => $dict]);
-        }
-
-        if (!filter_var($res, FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = 'E-mail адрес указан неверно';
+        } else if (!filter_var($res, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'E-mail адрес указан неверно - нет знака собаки';
         }
 
     }
