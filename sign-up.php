@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+
     if (isset($_FILES['file-upload']['name']) && $_FILES['file-upload']['name']) {
 		$tmp_name = $_FILES['file-upload']['tmp_name'];
 
@@ -66,12 +67,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sql = "SELECT id FROM users WHERE email = '$email'";
         $res = mysqli_query($link, $sql);
 
+        // $email_verif = $reg['email'];
+
         if (mysqli_num_rows($res) > 0) {
             $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
-        } else if (!filter_var($res, FILTER_VALIDATE_EMAIL)) {
+        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // или else if (!filter_var($email_verif, FILTER_VALIDATE_EMAIL))
             $errors['email'] = 'E-mail адрес указан неверно - нет знака собаки';
         }
-
     }
 
         if (count($errors) != 0) { // считает количество элементов в массиве
@@ -89,33 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit();
             }
         }
-
-    // $content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'reg' => $reg]);
-/*
-    if (count($errors) != 0) { // считает количество элементов в массиве
-        //$content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'reg' => $reg, 'errors' => $errors, 'dict' => $dict]);
-    }
-    else {
-        $sql = 'INSERT INTO lots (email, name, password, avatar, contact) VALUES (?, ?, ?, ?, ?)';
-
-        $stmt = db_get_prepare_stmt($link, $sql, [$jpg['name'], $jpg['description'], $jpg['path'], $jpg['start_price'], $jpg['date_close'], $jpg['step_bet'], $jpg['category']]);
-        $res = mysqli_stmt_execute($stmt);
-
-        if ($res) {
-            $jpg_id = mysqli_insert_id($link);
-
-            header("Location: lot.php?value_id=" . $jpg_id);
-            die();
-        }
-        else {
-            $content_main = include_template ('error.php', ['categories_select' => $categories_select]);
-
-        }
-
-        $content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'jpg' => $jpg]);
-
-    }*/
-
 }
 
 else {
