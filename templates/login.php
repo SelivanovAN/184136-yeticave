@@ -1,5 +1,6 @@
   <main>
     <nav class="nav">
+        <ul class="nav__list container">
         <?php foreach ($categories_select as $value): ?>
         <!--заполните этот список из массива категорий-->
         <li class="nav__item">
@@ -8,6 +9,7 @@
         <?php endforeach; ?>
       </ul>
     </nav>
+
     <form class="form container" action="https://echo.htmlacademy.ru" method="post"> <!-- form--invalid -->
       <h2>Вход</h2>
       <div class="form__item"> <!-- form__item--invalid -->

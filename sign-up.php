@@ -71,6 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //$content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'reg' => $reg, 'errors' => $errors, 'dict' => $dict]);
 
         }
+    }
+
+        if (count($errors) != 0) { // считает количество элементов в массиве
+            $content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'reg' => $reg, 'errors' => $errors, 'dict' => $dict]);
+        }
         else {
             $password = password_hash($reg['password'], PASSWORD_DEFAULT);
 
@@ -83,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: /login.php");
             exit();
         }
-    }
+
 
     // $content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'reg' => $reg]);
 /*
@@ -107,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         }
 
-        $content_main = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg]);
+        $content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'jpg' => $jpg]);
 
     }*/
 
