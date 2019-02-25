@@ -9,9 +9,9 @@
       </ul>
   </nav>
 
-    <?php $form_classname = count($errors) ? "form--invalid" : ""; ?> <!-- нет у меня такой функции -->
+    <?php $form_classname = count($errors) ? "form--invalid" : ""; ?>
 
-    <form class="form container <?=$form_classname;?>" action="/sign-up.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
+    <form class="form container <?=$form_classname;?>" action="/sign-up.php" method="post" enctype="multipart/form-data">
       <h2>Регистрация нового аккаунта</h2>
 
       <?php $classname = isset($errors['email']) ? "form__item--invalid" : "";
@@ -20,7 +20,7 @@
 
       <div class="form__item <?=$classname;?>"> <!-- form__item--invalid -->
         <label for="email">E-mail*</label>
-        <input id="email" class="<?=$classname;?>" type="text" name="signup[email]" placeholder="Введите e-mail">
+        <input id="email" class="<?=$classname;?>" type="text" name="signup[email]" placeholder="Введите e-mail" value="<?=$value;?>">
         <span class="form__error <?=$classname;?>"><?=$error_value;?></span>
       </div>
 
@@ -30,7 +30,7 @@
 
       <div class="form__item <?=$classname;?>">
         <label for="password">Пароль*</label>
-        <input id="password" class="<?=$classname;?>" type="text" name="signup[password]" placeholder="Введите пароль">
+        <input id="password" class="<?=$classname;?>" type="text" name="signup[password]" placeholder="Введите пароль" value="<?=$value;?>">
         <span class="form__error <?=$classname;?>"><?=$error_value;?></span>
       </div>
 
@@ -40,7 +40,7 @@
 
       <div class="form__item <?=$classname;?>">
         <label for="name">Имя*</label>
-        <input id="name" class="<?=$classname;?>" type="text" name="signup[name]" placeholder="Введите имя">
+        <input id="name" class="<?=$classname;?>" type="text" name="signup[name]" placeholder="Введите имя" value="<?=$value;?>">
         <span class="form__error <?=$classname;?>"><?=$error_value;?></span>
       </div>
 
@@ -50,7 +50,7 @@
 
       <div class="form__item <?=$classname;?>">
         <label for="message">Контактные данные*</label>
-        <textarea id="message" class="<?=$classname;?>" name="signup[message]" placeholder="Напишите как с вами связаться"></textarea>
+        <textarea id="message" class="<?=$classname;?>" name="signup[message]" placeholder="Напишите как с вами связаться"><?=$value;?></textarea>
         <span class="form__error <?=$classname;?>"><?=$error_value;?></span>
       </div>
 

@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     foreach ($req_fields as $field) {
         if (empty($reg[$field])) { // проверяет значение в ключе и наличие ключа
-            $errors[$field] = 'Это поле надо заполнить' .$field;
+            $errors[$field] = 'Это поле надо заполнить';
         }
     }
 
@@ -67,10 +67,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $res = mysqli_query($link, $sql);
 
         if (mysqli_num_rows($res) > 0) {
-            $errors[] = 'Пользователь с этим email уже зарегистрирован';
+            $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
             //$content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'reg' => $reg, 'errors' => $errors, 'dict' => $dict]);
-
         }
+
+        if (!filter_var($res, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'E-mail адрес указан неверно';
+        }
+
     }
 
         if (count($errors) != 0) { // считает количество элементов в массиве
@@ -82,13 +86,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $sql = 'INSERT INTO users (email, name, password, contact) VALUES (?, ?, ?, ?)';
             $stmt = db_get_prepare_stmt($link, $sql, [$reg['email'], $reg['name'], $password, $reg['message']]);
             $res = mysqli_stmt_execute($stmt);
-        }
 
-        if ($res && empty($errors)) {
-            header("Location: /login.php");
-            exit();
+            if ($res && empty($errors)) {
+                header("Location: /login.php");
+                exit();
+            }
         }
-
 
     // $content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'reg' => $reg]);
 /*
@@ -122,8 +125,6 @@ else {
 	$content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'reg' => $reg]);
 
 }
-
-
 
 $layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
 
