@@ -110,5 +110,3 @@
       </div>
     </section>
   </main>
-
-</div>
