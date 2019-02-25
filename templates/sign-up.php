@@ -12,7 +12,7 @@
 
     <?php $form_classname = count($errors) ? "form--invalid" : ""; ?> <!-- нет у меня такой функции -->
 
-    <form class="form container <?=$form_classname;?>" action="https://echo.htmlacademy.ru" method="post"> <!-- form--invalid -->
+    <form class="form container <?=$form_classname;?>" action="/sign-up.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
       <h2>Регистрация нового аккаунта</h2>
 
       <?php $classname = isset($errors['email']) ? "form__item--invalid" : "";
