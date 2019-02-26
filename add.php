@@ -35,11 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = [];
 
     foreach ($required as $key) {
-        if (empty($jpg[$key])) {
+        if (empty($jpg[$key])) { // проверяет значение в ключе и наличие ключа
             $errors[$key] = 'Это поле надо заполнить';
         }
     }
-    if (isset($jpg['date_close'])) {
+    if (isset($jpg['date_close'])) { //проверяет наличие ключа
         $date_close = strtotime($jpg['date_close']);
         $date_diff = $date_close - time();
 
@@ -50,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_FILES['file-upload']['name']) && $_FILES['file-upload']['name']) {
 		$tmp_name = $_FILES['file-upload']['tmp_name'];
-		// $path = $_FILES['file-upload']['name'];
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
     	$file_type = finfo_file($finfo, $tmp_name);
@@ -61,9 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         else {
             $filename = uniqid() . '.jpg';
             $jpg['path'] = 'img/' .$filename;
-            // move_uploaded_file($_FILES['file-upload']['tmp_name'], 'img/' . $filename);
+
             move_uploaded_file($tmp_name, 'img/' . $filename);
-            // $gif['path'] = $path;
         }
     }
     else {
@@ -71,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 
-    if (count($errors)) {
+    if (count($errors) != 0) { // считает количество элементов в массиве
         $content_main = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg, 'errors' => $errors, 'dict' => $dict]);
     }
     else {
@@ -101,14 +99,6 @@ else {
 	$content_main = include_template('add.php', ['categories_select' => $categories_select]);
 
 }
-
-// $content_main = include_template ('add.php', ['categories_select' => $categories_select]);
-/*
-$layout_content = include_template('layout.php', [
-	'content'    => $page_content,
-	'categories' => [],
-	'title'      => 'GifTube - Добавление гифки'
-]);*/
 
 $layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
 
