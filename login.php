@@ -1,8 +1,6 @@
 <?php
 date_default_timezone_set("Europe/Moscow");
 setlocale(LC_ALL, 'ru_RU');
-session_start();
-
 include_once 'functions.php';
 
 $link = mysqli_connect('localhost', 'root', '', '184136_yeticave');
@@ -42,16 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors['email'] = 'E-mail адрес указан неверно - нет знака собаки';
-    } else {*/
+
         $email = mysqli_real_escape_string($link, $form_enter['email']);
     	$sql = "SELECT * FROM users WHERE email = '$email'";
     	$res = mysqli_query($link, $sql);
 
         $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
 
-        if (!count($errors) and $user) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'E-mail адрес указан неверно - нет знака собаки';
+        } else if (!count($errors) and $user) {
         		if (password_verify($form_enter['password'], $user['password'])) {
         			$_SESSION['user'] = $user;
         		}
@@ -63,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         		$errors['email'] = 'Такой пользователь не найден';
         	}
 
-// }
+
     if (count($errors)) {
 		$content_main = include_template('login.php', ['categories_select' => $categories_select, 'form_enter' => $form_enter, 'errors' => $errors]);
 	}
@@ -77,7 +75,7 @@ else {
         $content_main = include_template('index.php', ['categories_select' => $categories_select, 'username' => $_SESSION['user']['name']]);
     }
     else {
-        $content_main = include_template('login.php', ['categories_select' => $categories_select, 'form_enter' => $form_enter, 'errors' => $errors]);
+        $content_main = include_template('login.php', ['categories_select' => $categories_select]);
     }
 }
 

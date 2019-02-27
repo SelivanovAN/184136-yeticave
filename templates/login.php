@@ -9,7 +9,7 @@
         </ul>
     </nav>
 
-    <?php $form_classname = count($errors) ? "form--invalid" : ""; ?>
+    <?php $form_classname = count($errors ?? []) ? "form--invalid" : ""; ?>
 
     <form class="form container <?=$form_classname;?>" action="/login.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
       <h2>Вход</h2>

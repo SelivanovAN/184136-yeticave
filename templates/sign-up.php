@@ -9,7 +9,7 @@
       </ul>
   </nav>
 
-    <?php $form_classname = count($errors) ? "form--invalid" : ""; ?>
+    <?php $form_classname = count($errors ?? []) ? "form--invalid" : ""; ?>
 
     <form class="form container <?=$form_classname;?>" action="/sign-up.php" method="post" enctype="multipart/form-data">
       <h2>Регистрация нового аккаунта</h2>
