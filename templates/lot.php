@@ -19,6 +19,9 @@
           <p class="lot-item__category">Категория: <span><?=check_hakers($lot_select['MAX(c.name)']); ?></span></p>
           <p class="lot-item__description"><?=check_hakers($lot_select['description']); ?></p>
         </div>
+
+        <?php if (isset($_SESSION['user'])): ?>
+
         <div class="lot-item__right">
           <div class="lot-item__state">
             <div class="lot-item__timer timer">
@@ -50,6 +53,10 @@
               <button type="submit" class="button">Сделать ставку</button>
             </form>
           </div>
+
+        <?php else: ?>
+
+
           <!--
           <div class="history">
             <h3>История ставок (<span>10</span>)</h3>
@@ -108,5 +115,8 @@
         </div> -->
         </div>
       </div>
+
+      <?php endif; ?>
+
     </section>
   </main>

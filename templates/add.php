@@ -10,6 +10,8 @@
       </ul>
     </nav>
 
+    <?php if (isset($_SESSION['user'])): ?>
+
     <?php $form_classname = count($errors ?? []) ? "form--invalid" : ""; ?>
 
     <form class="form form--add-lot container <?=$form_classname;?>" action="/add.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
@@ -108,4 +110,12 @@
       <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
       <button type="submit" class="button">Добавить лот</button>
     </form>
+
+    <?php else: ?>
+        <section class="lot-item container">
+            <h2>404 Страница не найдена</h2>
+            <p>Данной страницы не существует на сайте.</p>
+        </section>
+    <?php endif; ?>
+
   </main>
