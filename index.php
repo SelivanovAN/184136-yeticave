@@ -48,6 +48,8 @@ if($link) {
 $content_main = include_template ('index.php', ['categories_select' => $categories_select, 'lots_select'=>$lots_select]);
 $layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
 
+// $_SESSION = [];
+
 print ($layout);
 
 ?>

@@ -42,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = 'E-mail адрес указан неверно - нет знака собаки';
-    }
+    } else {*/
         $email = mysqli_real_escape_string($link, $form_enter['email']);
     	$sql = "SELECT * FROM users WHERE email = '$email'";
     	$res = mysqli_query($link, $sql);
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         		$errors['email'] = 'Такой пользователь не найден';
         	}
 
-
+// }
     if (count($errors)) {
 		$content_main = include_template('login.php', ['categories_select' => $categories_select, 'form_enter' => $form_enter, 'errors' => $errors]);
 	}
