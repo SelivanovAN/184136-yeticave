@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 function db_get_prepare_stmt($link, $sql, $data = []) {
     $stmt = mysqli_prepare($link, $sql);
 

@@ -1,6 +1,7 @@
 <?php
 date_default_timezone_set("Europe/Moscow");
 setlocale(LC_ALL, 'ru_RU');
+session_start();
 include_once 'functions.php';
 
 $link = mysqli_connect('localhost', 'root', '', '184136_yeticave');
