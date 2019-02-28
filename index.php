@@ -7,10 +7,9 @@ $link = mysqli_connect('localhost', 'root', '', '184136_yeticave');
 mysqli_set_charset($link, "utf8");
 
 $title = 'Главная';
-$is_auth = rand(0, 1);
-$user_name = 'Александр'; // укажите здесь ваше имя
 
 $categories_select = [];
+
 $lots_select = [];
 
 if($link) {
@@ -45,7 +44,9 @@ if($link) {
 }
 
 $content_main = include_template ('index.php', ['categories_select' => $categories_select, 'lots_select'=>$lots_select]);
-$layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
+$layout = include_template ('layout.php', ['title' => $title, 'categories_select' => $categories_select, 'content_main' => $content_main]);
+
+//unset($_SESSION['user']);
 
 print ($layout);
 

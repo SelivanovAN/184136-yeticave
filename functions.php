@@ -1,4 +1,9 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+session_start();
+
 function db_get_prepare_stmt($link, $sql, $data = []) {
     $stmt = mysqli_prepare($link, $sql);
 
