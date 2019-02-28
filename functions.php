@@ -38,6 +38,30 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
     return $stmt;
 }
 
+
+$show_categories_select = function () {
+
+$link = mysqli_connect('localhost', 'root', '', '184136_yeticave');
+$categories_select = [];
+
+    if($link) {
+        $categories_sql = 'SELECT * FROM category ORDER BY name ASC';
+        $result_select = mysqli_query($link, $categories_sql);
+
+        if ($result_select) {
+            $categories_select = mysqli_fetch_all($result_select, MYSQLI_ASSOC);
+        } else {
+            print ('Произошла ошибка при выполнении запроса! Обратитесь к администратору, либо попробуйте снова.');
+            die();
+        }
+    } else {
+        print ('Произошла ошибка подключения, недоступна база данных! Обратитесь к администратору, либо попробуйте снова.');
+        die();
+    }
+    return $categories_select;
+};
+
+
 function space_price($price) {
     $around_price = ceil($price);
     if ($around_price > 1000) {
