@@ -20,9 +20,10 @@
           <p class="lot-item__description"><?=check_hakers($lot_select['description']); ?></p>
         </div>
 
+        <div class="lot-item__right">
+
         <?php if (isset($_SESSION['user'])): ?>
 
-        <div class="lot-item__right">
           <div class="lot-item__state">
             <div class="lot-item__timer timer">
               <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
@@ -56,7 +57,21 @@
 
         <?php else: ?>
 
-
+            <div class="lot-item__state">
+              <div class="lot-item__timer timer">
+                <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
+              </div>
+              <div class="lot-item__cost-state">
+                <div class="lot-item__rate">
+                  <span class="lot-item__amount">Текущая цена</span>
+                   <?php if (!empty($lot_select['MAX(b.price_bye)'])): ?>
+                      <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
+                  <?php else: ?>
+                      <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['start_price'])); ?></span>
+                  <?php endif; ?>
+                </div>
+              </div>
+            </div>
           <!--
           <div class="history">
             <h3>История ставок (<span>10</span>)</h3>
