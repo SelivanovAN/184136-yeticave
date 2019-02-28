@@ -8,8 +8,6 @@ mysqli_set_charset($link, "utf8");
 
 $title = 'Главная';
 
-$user_name = 'Александр'; // укажите здесь ваше имя
-
 $categories_select = [];
 
 $lots_select = [];
@@ -46,7 +44,7 @@ if($link) {
 }
 
 $content_main = include_template ('index.php', ['categories_select' => $categories_select, 'lots_select'=>$lots_select]);
-$layout = include_template ('layout.php', ['title' => $title, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
+$layout = include_template ('layout.php', ['title' => $title, 'categories_select' => $categories_select, 'content_main' => $content_main]);
 
 //unset($_SESSION['user']);
 

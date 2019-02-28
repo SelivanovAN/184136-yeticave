@@ -30,21 +30,21 @@
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
-                <?php if ($lot_select['max(b.price_bye)']): ?>
+                 <?php if (!empty($lot_select['MAX(b.price_bye)'])): ?>
                     <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
                 <?php else: ?>
                     <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['start_price'])); ?></span>
                 <?php endif; ?>
               </div>
               <div class="lot-item__min-cost">
-                  <?php if ($lot_select['MAX(b.price_buy)']): ?>
+                  <?php if (!empty($lot_select['MAX(b.price_bye)'])): ?>
                       Мин. ставка <span><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?></span>
                   <?php else: ?>
                       Мин. ставка <span><?=space_price(check_hakers($lot_select['start_price'] + $lot_select['step_bet'])); ?></span>
                   <?php endif; ?>
               </div>
             </div>
-            <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
+            <form class="lot-item__form" action="/lot.php" method="post" enctype="multipart/form-data">
               <p class="lot-item__form-item form__item form__item--invalid">
                 <label for="cost">Ваша ставка</label>
                 <input id="cost" type="text" name="cost" placeholder="<?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?>">
