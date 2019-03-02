@@ -44,8 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES['file-upload']['name']) && $_FILES['file-upload']['name']) {
 		$tmp_name = $_FILES['file-upload']['tmp_name'];
 
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    	$file_type = finfo_file($finfo, $tmp_name);
+        // $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    	// $file_type = finfo_file($finfo, $tmp_name);
+
+        $file_type = mime_content_type($tmp_name);
 
         if ($file_type !== "image/jpg" && $file_type !== "image/jpeg" && $file_type !== "image/png") {
             $errors['file-upload'] = 'Загрузите картинку в формате JPG / JPEG / PNG';
@@ -57,9 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             move_uploaded_file($tmp_name, 'img/' . $filename);
         }
     }
-    else {
-        $errors['file-upload'] = 'Вы не загрузили файл';
-    }
+    // если пользователь не загрузил файл то это неошибка else {$errors['file-upload'] = 'Вы не загрузили файл'; }
 
     if (empty($errors)) {
 
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (mysqli_num_rows($res) > 0) {
             $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
-        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // или else if (!filter_var($email_verif, FILTER_VALIDATE_EMAIL))
+        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = 'E-mail адрес указан неверно - нет знака собаки';
         }
     }
@@ -82,8 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         else {
             $password = password_hash($reg['password'], PASSWORD_DEFAULT);
 
-            $sql = 'INSERT INTO users (email, name, password, contact) VALUES (?, ?, ?, ?)';
-            $stmt = db_get_prepare_stmt($link, $sql, [$reg['email'], $reg['name'], $password, $reg['message']]);
+            $sql = 'INSERT INTO users (email, name, password, contact, avatar) VALUES (?, ?, ?, ?, ?)';
+            $stmt = db_get_prepare_stmt($link, $sql, [$reg['email'], $reg['name'], $password, $reg['message'], $reg['path'] ?? ""]);
             $res = mysqli_stmt_execute($stmt);
 
             if ($res && empty($errors)) {
@@ -97,7 +97,7 @@ else {
 	$content_main = include_template('sign-up.php', ['categories_select' => $categories_select]);
 }
 
-$layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
+$layout = include_template ('layout.php', ['title' => $title, 'categories_select' => $categories_select, 'content_main' => $content_main]);
 
 print ($layout);
 

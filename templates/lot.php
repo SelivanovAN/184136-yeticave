@@ -45,34 +45,16 @@
                   <?php endif; ?>
               </div>
             </div>
-            <form class="lot-item__form" action="/lot.php" method="post" enctype="multipart/form-data">
+            <form class="lot-item__form" method="post" enctype="multipart/form-data">
               <p class="lot-item__form-item form__item form__item--invalid">
                 <label for="cost">Ваша ставка</label>
-                <input id="cost" type="text" name="cost" placeholder="<?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?>">
+                <input id="cost" type="text" name="add_bet[cost]" placeholder="<?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?>">
                 <span class="form__error">Введите наименование лота</span>
               </p>
               <button type="submit" class="button">Сделать ставку</button>
             </form>
           </div>
 
-        <?php else: ?>
-
-            <div class="lot-item__state">
-              <div class="lot-item__timer timer">
-                <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
-              </div>
-              <div class="lot-item__cost-state">
-                <div class="lot-item__rate">
-                  <span class="lot-item__amount">Текущая цена</span>
-                   <?php if (!empty($lot_select['MAX(b.price_bye)'])): ?>
-                      <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
-                  <?php else: ?>
-                      <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['start_price'])); ?></span>
-                  <?php endif; ?>
-                </div>
-              </div>
-            </div>
-          <!--
           <div class="history">
             <h3>История ставок (<span>10</span>)</h3>
             <table class="history__list">
@@ -127,7 +109,27 @@
                 <td class="history__time">19.03.17 в 10:20</td>
               </tr>
             </table>
-        </div> -->
+        </div>
+
+        <?php else: ?>
+
+            <div class="lot-item__state">
+              <div class="lot-item__timer timer">
+                <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
+              </div>
+              <div class="lot-item__cost-state">
+                <div class="lot-item__rate">
+                  <span class="lot-item__amount">Текущая цена</span>
+                   <?php if (!empty($lot_select['MAX(b.price_bye)'])): ?>
+                      <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
+                  <?php else: ?>
+                      <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['start_price'])); ?></span>
+                  <?php endif; ?>
+                </div>
+              </div>
+            </div>
+
+
         </div>
       </div>
 

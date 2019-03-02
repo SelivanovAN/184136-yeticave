@@ -13,11 +13,11 @@ INSERT INTO lots (date_create, name, description, picture_link, start_price, dat
 INSERT INTO lots (date_create, name, description, picture_link, start_price, date_close, step_bet, id_user, user_win, id_category)
  VALUES ("2019-02-03 01:01:00", "Snowboard", "DC Ply Mens 2016/2017 Snowboard", "img/lot-2.jpg", 159999, "2019-08-08 01:01:00", 100, 1, 1, 1);
 INSERT INTO lots (date_create, name, description, picture_link, start_price, date_close, step_bet, id_user, user_win, id_category)
- VALUES ("2019-02-10 01:01:00", "Mounts", "Крепления Union Contact Pro 2015 года размер L/XL", "img/lot-3.jpg", 8000, NULL, 100, 1, 1, 2);
+ VALUES ("2019-02-10 01:01:00", "Mounts", "Крепления Union Contact Pro 2015 года размер L/XL", "img/lot-3.jpg", 8000, "2019-08-08 01:01:00", 100, 1, 1, 2);
 INSERT INTO lots (date_create, name, description, picture_link, start_price, date_close, step_bet, id_user, user_win, id_category)
- VALUES ("2019-02-10 01:01:00", "Boots", "Ботинки для сноуборда DC Mutiny Charocal", "img/lot-4.jpg", 10999, NULL, 100, 1, 1, 3);
+ VALUES ("2019-02-10 01:01:00", "Boots", "Ботинки для сноуборда DC Mutiny Charocal", "img/lot-4.jpg", 10999, "2019-08-08 01:01:00", 100, 1, 1, 3);
 INSERT INTO lots (date_create, name, description, picture_link, start_price, date_close, step_bet, id_user, user_win, id_category)
- VALUES ("2019-02-09 01:01:00", "Jacket", "Куртка для сноуборда DC Mutiny Charocal", "img/lot-5.jpg", 7500, NULL, 100, 1, 1, 4);
+ VALUES ("2019-02-09 01:01:00", "Jacket", "Куртка для сноуборда DC Mutiny Charocal", "img/lot-5.jpg", 7500, "2019-08-08 01:01:00", 100, 1, 1, 4);
 INSERT INTO lots (date_create, name, description, picture_link, start_price, date_close, step_bet, id_user, user_win, id_category)
  VALUES ("2018-01-01 01:01:00", "Mask", "Маска Oakley Canopy", "img/lot-6.jpg", 5400, "2019-07-07 01:01:00", 100, 1, 1, 6);
 

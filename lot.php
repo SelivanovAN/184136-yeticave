@@ -3,14 +3,13 @@ date_default_timezone_set("Europe/Moscow");
 setlocale(LC_ALL, 'ru_RU');
 include_once 'functions.php';
 
-$link = mysqli_connect('localhost', 'root', '', '184136_yeticave');
-mysqli_set_charset($link, "utf8");
+$link = connect_to_db();
 
 $title = 'Главная';
-$is_auth = rand(0, 1);
-$user_name = 'Александр'; // укажите здесь ваше имя
 
 $categories_select = [];
+
+
 
 if($link) {
     $categories_sql = 'SELECT * FROM category ORDER BY name ASC';
@@ -54,13 +53,50 @@ if($link) {
     die();
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
+	$form_add_bet = $_POST['add_bet'];
+
+	$required = ['cost'];
+    $dict = ['cost' => 'Ставка'];
+	$errors = [];
+
+	foreach ($required as $field) {
+	    if (empty($form_add_bet[$field])) {
+	        $errors[$field] = 'Это поле надо заполнить';
+        }
+    }
+
+    if (!empty($lot_select['MAX(b.price_bye)'])) {
+        $current_bet = $lot_select['MAX(b.price_bye)'] + $lot_select['step_bet'];
+    }
+    else {
+        $current_bet = $lot_select['start_price'] + $lot_select['step_bet'];
+    }
+
+    if ($form_add_bet['cost'] < $current_bet) {
+         $errors['cost'] = 'ставка не должа быть меньше текущей цены';
+    }
+
+    if (count($errors) == 0) {
+        $bet_add = 'INSERT INTO bets (price_buy, id_user, id_lot) VALUES (?, ?, ?)';
+        $stmt = db_get_prepare_stmt($link, $bet_add, [$form_add_bet['cost'], $_SESSION['user']['id'], $lot_id]);
+        $res = mysqli_stmt_execute($stmt);
+
+        if ($res && empty($errors)) {
+            header("Location: /lot.php?value_id=$lot_id");
+            exit();
+        }
+    }
+
+}
+
 if ($lot_select) {
     $content_main = include_template ('lot.php', ['categories_select' => $categories_select, 'lot_select' => $lot_select]);
 } else {
     $content_main = include_template ('error.php', ['categories_select' => $categories_select, 'lot_select' => $lot_select]);
 }
 
-$layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
+$layout = include_template ('layout.php', ['title' => $title, 'categories_select' => $categories_select, 'content_main' => $content_main]);
 
 print ($layout);
 

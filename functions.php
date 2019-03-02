@@ -4,6 +4,12 @@ ini_set('display_errors', 1);
 
 session_start();
 
+function return_name_title() {
+    $title = ['index' => 'Главная', 'add' => 'Добавление', 'lot' => 'Лот', 'sign-up' => 'Регистрация', 'login' => 'Вход',];
+    return $title;
+}
+
+
 function db_get_prepare_stmt($link, $sql, $data = []) {
     $stmt = mysqli_prepare($link, $sql);
 
@@ -38,11 +44,16 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
     return $stmt;
 }
 
+function connect_to_db() {
+    $link = mysqli_connect('localhost', 'root', '', '184136_yeticave');
+    mysqli_set_charset($link, "utf8");
 
-$show_categories_select = function () {
+    return $link;
+}
 
-$link = mysqli_connect('localhost', 'root', '', '184136_yeticave');
-$categories_select = [];
+function show_categories_select() {
+
+    $link = connect_to_db();
 
     if($link) {
         $categories_sql = 'SELECT * FROM category ORDER BY name ASC';
