@@ -66,8 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
         }
     }
 
-    if (!empty($lot_select['MAX(b.price_bye)'])) {
-        $current_bet = $lot_select['MAX(b.price_bye)'] + $lot_select['step_bet'];
+    if (!empty($lot_select['MAX(b.price_buy)'])) {
+        $current_bet = $lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'];
     }
     else {
         $current_bet = $lot_select['start_price'] + $lot_select['step_bet'];

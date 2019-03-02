@@ -31,14 +31,14 @@
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
-                 <?php if (!empty($lot_select['MAX(b.price_bye)'])): ?>
+                 <?php if (!empty($lot_select['MAX(b.price_buy)'])): ?>
                     <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
                 <?php else: ?>
                     <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['start_price'])); ?></span>
                 <?php endif; ?>
               </div>
               <div class="lot-item__min-cost">
-                  <?php if (!empty($lot_select['MAX(b.price_bye)'])): ?>
+                  <?php if (!empty($lot_select['MAX(b.price_buy)'])): ?>
                       Мин. ставка <span><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?></span>
                   <?php else: ?>
                       Мин. ставка <span><?=space_price(check_hakers($lot_select['start_price'] + $lot_select['step_bet'])); ?></span>
@@ -120,7 +120,7 @@
               <div class="lot-item__cost-state">
                 <div class="lot-item__rate">
                   <span class="lot-item__amount">Текущая цена</span>
-                   <?php if (!empty($lot_select['MAX(b.price_bye)'])): ?>
+                   <?php if (!empty($lot_select['MAX(b.price_buy)'])): ?>
                       <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
                   <?php else: ?>
                       <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['start_price'])); ?></span>
