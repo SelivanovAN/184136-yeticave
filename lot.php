@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
     }
 
     if (count($errors) != 0) {
-        $content_main = include_template('login.php', ['categories_select' => show_categories_select(), 'form_add_bet' => $form_add_bet, 'errors' => $errors]);
+        $content_main = include_template('lot.php', ['categories_select' => show_categories_select(), 'form_add_bet' => $form_add_bet, 'errors' => $errors]);
     }
     else {
         $bet_add = 'INSERT INTO bets (price_buy, id_user, id_lot) VALUES (?, ?, ?)';
