@@ -3,29 +3,8 @@ date_default_timezone_set("Europe/Moscow");
 setlocale(LC_ALL, 'ru_RU');
 include_once 'functions.php';
 
-$link = mysqli_connect('localhost', 'root', '', '184136_yeticave');
-mysqli_set_charset($link, "utf8");
-
-$title = 'Лот';
-$is_auth = rand(0, 1);
-$user_name = 'Александр';
-
-$categories_select = [];
-
-if($link) {
-    $categories_sql = 'SELECT * FROM category ORDER BY name ASC';
-    $result_select = mysqli_query($link, $categories_sql);
-
-    if ($result_select) {
-        $categories_select = mysqli_fetch_all($result_select, MYSQLI_ASSOC);
-    } else {
-        print ('Произошла ошибка при выполнении запроса! Обратитесь к администратору, либо попробуйте снова.');
-        die();
-    }
-} else {
-    print ('Произошла ошибка подключения, недоступна база данных! Обратитесь к администратору, либо попробуйте снова.');
-    die();
-}
+$link = connect_to_db();
+$title = return_name_title();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $jpg = $_POST['jpg'];
@@ -51,8 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES['file-upload']['name']) && $_FILES['file-upload']['name']) {
 		$tmp_name = $_FILES['file-upload']['tmp_name'];
 
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    	$file_type = finfo_file($finfo, $tmp_name);
+        $file_type = mime_content_type($tmp_name);
 
         if ($file_type !== "image/jpg" && $file_type !== "image/jpeg" && $file_type !== "image/png") {
             $errors['file-upload'] = 'Загрузите картинку в формате JPG / JPEG / PNG';
@@ -63,20 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             move_uploaded_file($tmp_name, 'img/' . $filename);
         }
-    }
-    else {
-        $errors['file-upload'] = 'Вы не загрузили файл';
-    }
-
+    } // если пользователь не загрузил файл то это неошибка else {$errors['file-upload'] = 'Вы не загрузили файл'; }
 
     if (count($errors) != 0) { // считает количество элементов в массиве
         $content_main = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg, 'errors' => $errors, 'dict' => $dict]);
     }
     else {
         $sql = 'INSERT INTO lots (date_create, name, description, picture_link, start_price, date_close, step_bet, id_user, id_category)
-        VALUES (NOW(), ?, ?, ?, ?, ?, ?, 1, ?)';
+        VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
 
-        $stmt = db_get_prepare_stmt($link, $sql, [$jpg['name'], $jpg['description'], $jpg['path'], $jpg['start_price'], $jpg['date_close'], $jpg['step_bet'], $jpg['category']]);
+        $stmt = db_get_prepare_stmt($link, $sql, [$jpg['name'], $jpg['description'], $jpg['path'], $jpg['start_price'], $jpg['date_close'], $jpg['step_bet'], $_SESSION['user']['id'], $jpg['category']]);
         $res = mysqli_stmt_execute($stmt);
 
         if ($res) {
@@ -86,21 +60,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die();
         }
         else {
-            $content_main = include_template ('error.php', ['categories_select' => $categories_select]);
-
+            $content_main = include_template ('error.php', ['categories_select' => show_categories_select()]);
         }
 
-        $content_main = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg]);
-
+        $content_main = include_template('add.php', ['categories_select' => show_categories_select(), 'jpg' => $jpg]);
     }
 
 }
 else {
-	$content_main = include_template('add.php', ['categories_select' => $categories_select]);
-
+	$content_main = include_template('add.php', ['categories_select' => show_categories_select()]);
 }
 
-$layout = include_template ('layout.php', ['title' => $title, 'is_auth' => $is_auth, 'user_name' => $user_name, 'categories_select' => $categories_select, 'content_main' => $content_main]);
+$layout = include_template ('layout.php', ['title' => $title['add'], 'categories_select' => show_categories_select(), 'content_main' => $content_main]);
 
 print ($layout);
 

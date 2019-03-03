@@ -2,10 +2,9 @@
     <nav class="nav">
       <ul class="nav__list container">
           <?php foreach ($categories_select as $value): ?>
-          <!--заполните этот список из массива категорий-->
-          <li class="nav__item">
-              <a href="pages/all-lots.html"><?=$value['name']; ?></a>
-          </li>
+              <li class="nav__item">
+                  <a href="pages/all-lots.html"><?=$value['name']; ?></a>
+              </li>
           <?php endforeach; ?>
       </ul>
     </nav>
@@ -22,49 +21,83 @@
 
         <div class="lot-item__right">
 
-        <?php if (isset($_SESSION['user'])): ?>
+        <?php if (isset($_SESSION['user']) && ($_SESSION['user']['id'] != $lot_select['id_user']) && !$time_finish && !$user_has_bet): ?>
 
           <div class="lot-item__state">
             <div class="lot-item__timer timer">
-              <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
+                <?php if ($time_finish): ?>
+                    Лот завершен
+                <?php else: ?>
+                    <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
+                <?php endif; ?>
             </div>
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
-                 <?php if (!empty($lot_select['MAX(b.price_bye)'])): ?>
+                 <?php if (!empty($lot_select['MAX(b.price_buy)'])): ?>
                     <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
                 <?php else: ?>
                     <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['start_price'])); ?></span>
                 <?php endif; ?>
               </div>
               <div class="lot-item__min-cost">
-                  <?php if (!empty($lot_select['MAX(b.price_bye)'])): ?>
+                  <?php if (!empty($lot_select['MAX(b.price_buy)'])): ?>
                       Мин. ставка <span><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?></span>
                   <?php else: ?>
                       Мин. ставка <span><?=space_price(check_hakers($lot_select['start_price'] + $lot_select['step_bet'])); ?></span>
                   <?php endif; ?>
               </div>
             </div>
-            <form class="lot-item__form" action="/lot.php" method="post" enctype="multipart/form-data">
-              <p class="lot-item__form-item form__item form__item--invalid">
+
+            <?php $form_classname = count($errors ?? []) ? "form--invalid" : ""; ?>
+
+            <form class="lot-item__form <?=$form_classname;?>" method="post" enctype="multipart/form-data">
+
+                <?php $classname = isset($errors['cost']) ? "form__item--invalid" : "";
+                $error_value = isset($errors['cost']) ? $errors['cost'] : "";
+                $value = isset($form_add_bet['cost']) ? $form_add_bet['cost'] : ""; ?>
+
+              <p class="lot-item__form-item form__item <?=$classname;?>">
                 <label for="cost">Ваша ставка</label>
-                <input id="cost" type="text" name="cost" placeholder="<?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?>">
-                <span class="form__error">Введите наименование лота</span>
+                <input id="cost" class="<?=$classname;?>" type="text" name="add_bet[cost]" placeholder="<?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?>">
+                <span class="form__error <?=$classname;?>"><?=$error_value;?></span>
               </p>
               <button type="submit" class="button">Сделать ставку</button>
+
             </form>
           </div>
+
+          <div class="history">
+            <h3>История ставок (<span><?=count($bets_select); ?></span>)</h3>
+            <table class="history__list">
+
+            <?php foreach ($bets_select as $value): ?>
+
+              <tr class="history__item">
+                <td class="history__name"><?=$value['name']; ?></td>
+                <td class="history__price"><?=space_price($value['price_buy']); ?> р</td>
+                <td class="history__time"><?=show_date_end_bet($value['date_place']); ?></td>
+              </tr>
+
+             <?php endforeach; ?>
+
+            </table>
+        </div>
 
         <?php else: ?>
 
             <div class="lot-item__state">
-              <div class="lot-item__timer timer">
-                <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
-              </div>
+                <div class="lot-item__timer timer">
+                    <?php if ($time_finish): ?>
+                        Лот завершен
+                    <?php else: ?>
+                        <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
+                    <?php endif; ?>
+                </div>
               <div class="lot-item__cost-state">
                 <div class="lot-item__rate">
                   <span class="lot-item__amount">Текущая цена</span>
-                   <?php if (!empty($lot_select['MAX(b.price_bye)'])): ?>
+                   <?php if (!empty($lot_select['MAX(b.price_buy)'])): ?>
                       <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['MAX(b.price_buy)'])); ?></span>
                   <?php else: ?>
                       <span class="lot-item__cost"><?=space_price(check_hakers($lot_select['start_price'])); ?></span>
@@ -72,62 +105,7 @@
                 </div>
               </div>
             </div>
-          <!--
-          <div class="history">
-            <h3>История ставок (<span>10</span>)</h3>
-            <table class="history__list">
-              <tr class="history__item">
-                <td class="history__name">Иван</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">5 минут назад</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Константин</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">20 минут назад</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Евгений</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">Час назад</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Игорь</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 08:21</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Енакентий</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 13:20</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Семён</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 12:20</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Илья</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 10:20</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Енакентий</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 13:20</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Семён</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 12:20</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Илья</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 10:20</td>
-              </tr>
-            </table>
-        </div> -->
+
         </div>
       </div>
 

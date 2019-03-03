@@ -2,9 +2,9 @@
     <nav class="nav">
       <ul class="nav__list container">
           <?php foreach ($categories_select as $value): ?>
-          <li class="nav__item">
-              <a href="pages/all-lots.html"><?=$value['name']; ?></a>
-          </li>
+              <li class="nav__item">
+                  <a href="pages/all-lots.html"><?=$value['name']; ?></a>
+              </li>
           <?php endforeach; ?>
       </ul>
   </nav>

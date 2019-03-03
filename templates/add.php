@@ -2,10 +2,9 @@
     <nav class="nav">
       <ul class="nav__list container">
           <?php foreach ($categories_select as $value): ?>
-          <!--заполните этот список из массива категорий-->
-          <li class="nav__item">
-              <a href="pages/all-lots.html"><?=$value['name']; ?></a>
-          </li>
+              <li class="nav__item">
+                  <a href="pages/all-lots.html"><?=$value['name']; ?></a>
+              </li>
           <?php endforeach; ?>
       </ul>
     </nav>
@@ -51,7 +50,6 @@
       <div class="form__item form__item--wide <?=$classname;?>">
         <label for="message">Описание</label>
         <textarea id="message" class="<?=$classname;?>" name="jpg[description]" placeholder="Напишите описание лота"><?=$value;?></textarea>
-        <!--<span class="form__error">Напишите описание лота</span>-->
         <span class="form__error <?=$classname;?>"><?=$error_value;?></span>
       </div>
 
@@ -112,10 +110,12 @@
     </form>
 
     <?php else: ?>
+
         <section class="lot-item container">
             <h2>404 Страница не найдена</h2>
             <p>Данной страницы не существует на сайте.</p>
         </section>
+
     <?php endif; ?>
 
   </main>
