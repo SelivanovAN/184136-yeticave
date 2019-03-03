@@ -30,8 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES['file-upload']['name']) && $_FILES['file-upload']['name']) {
 		$tmp_name = $_FILES['file-upload']['tmp_name'];
 
-        // $finfo = finfo_open(FILEINFO_MIME_TYPE); $file_type = finfo_file($finfo, $tmp_name);
-
         $file_type = mime_content_type($tmp_name);
 
         if ($file_type !== "image/jpg" && $file_type !== "image/jpeg" && $file_type !== "image/png") {
@@ -43,8 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             move_uploaded_file($tmp_name, 'img/' . $filename);
         }
-    }
-    // если пользователь не загрузил файл то это неошибка else {$errors['file-upload'] = 'Вы не загрузили файл'; }
+    } // если пользователь не загрузил файл то это неошибка else {$errors['file-upload'] = 'Вы не загрузили файл'; }
 
     if (count($errors) != 0) { // считает количество элементов в массиве
         $content_main = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg, 'errors' => $errors, 'dict' => $dict]);

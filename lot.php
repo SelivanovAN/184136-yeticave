@@ -8,7 +8,7 @@ $title = return_name_title();
 
 if($link) {
 
-    if (!isset($_GET['value_id'])) {
+    if (!isset($_GET['value_id'])) { //проверяет наличие ключа
             $lot_id = 0;
         } else {
             $lot_id = (int)$_GET['value_id'];
@@ -37,7 +37,7 @@ $bets_select = [];
 
 if($link) {
 
-    $bets_sql = 'SELECT b.date_place, b.price_buy, u.name, b.id_user FROM bets b JOIN users u ON b.id_user = u.id ORDER BY b.date_place DESC';
+    $bets_sql = "SELECT b.date_place, b.price_buy, u.name, b.id_user FROM bets b JOIN users u ON b.id_user = u.id WHERE b.id_lot = $lot_id ORDER BY b.date_place DESC";
     $result_bets = mysqli_query($link, $bets_sql);
 
     if ($result_select) {
@@ -51,7 +51,6 @@ if($link) {
     die();
 }
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
 	$form_add_bet = $_POST['add_bet'];
 
@@ -64,16 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
 	        $errors[$field] = 'Это поле надо заполнить';
         }
     }
-/*
-    if (isset($form_add_bet['date_close'])) { //проверяет наличие ключа
-        $date_close = strtotime($form_add_bet['date_close']);
-        $date_diff = $date_close - time();
-
-        if ($date_diff < (60*60*24)) {
-            $errors['date_close'] = 'Дата должна быть больше текущей как минимум на одни сутки';
-        }
-    }*/
-    $date_close = $form_add_bet['date_close'];
 
     if (!empty($lot_select['MAX(b.price_buy)'])) {
         $current_bet = $lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'];
@@ -101,8 +90,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
     }
 }
 
+$time_finish = strtotime($lot_select['date_close']) < time();
+
+$bet_user = "SELECT * FROM bets WHERE id_user = ".$_SESSION['user']['id']." AND id_lot = $lot_id";
+$result_bet_user = mysqli_query($link, $bet_user);
+$user_has_bet = count(mysqli_fetch_array($result_bet_user, MYSQLI_ASSOC));
+
+
 if ($lot_select) {
-    $content_main = include_template ('lot.php', ['categories_select' => show_categories_select(), 'lot_select' => $lot_select, 'errors' => $errors ?? [], 'bets_select' => $bets_select]);
+    $content_main = include_template ('lot.php', ['categories_select' => show_categories_select(), 'lot_select' => $lot_select, 'errors' => $errors ?? [], 'bets_select' => $bets_select, 'time_finish' => $time_finish, 'user_has_bet' => $user_has_bet]);
 } else {
     $content_main = include_template ('error.php', ['categories_select' => show_categories_select(), 'lot_select' => $lot_select]);
 }

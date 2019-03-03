@@ -39,7 +39,6 @@
                     </li>
                  </ul>
             <?php endif; ?>
-        <!-- здесь должен быть PHP код для показа имени пользователя -->
         </nav>
     </div>
 </header>
@@ -53,7 +52,6 @@
     <nav class="nav">
         <ul class="nav__list container">
             <?php foreach ($categories_select as $value): ?>
-            <!--заполните этот список из массива категорий-->
             <li class="nav__item">
                 <a href="pages/all-lots.html"><?=$value['name']; ?></a>
             </li>

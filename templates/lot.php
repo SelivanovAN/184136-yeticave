@@ -2,10 +2,9 @@
     <nav class="nav">
       <ul class="nav__list container">
           <?php foreach ($categories_select as $value): ?>
-          <!--заполните этот список из массива категорий-->
-          <li class="nav__item">
-              <a href="pages/all-lots.html"><?=$value['name']; ?></a>
-          </li>
+              <li class="nav__item">
+                  <a href="pages/all-lots.html"><?=$value['name']; ?></a>
+              </li>
           <?php endforeach; ?>
       </ul>
     </nav>
@@ -22,19 +21,15 @@
 
         <div class="lot-item__right">
 
-        <?php if (isset($_SESSION['user']) && ($_SESSION['user']['id'] != $lot_select['id_user']) || strtotime($form_add_bet['date_close'] < time())): ?>
-
-<!-- $_SESSION['id'] === $lot['userId'] || $user_has_bet
- || show_date_close($lot_select['date_close'] < date_create('now'))
-isset($_SESSION['user']['id']) ===  $lot_select['id_user']
-
-|| show_date_close($date_close['date_close']) < time("now")
-strtotime($form_add_bet['date_close']) < time()
--->
+        <?php if (isset($_SESSION['user']) && ($_SESSION['user']['id'] != $lot_select['id_user']) && !$time_finish && !$user_has_bet): ?>
 
           <div class="lot-item__state">
             <div class="lot-item__timer timer">
-              <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
+                <?php if ($time_finish): ?>
+                    Лот завершен
+                <?php else: ?>
+                    <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
+                <?php endif; ?>
             </div>
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
@@ -81,7 +76,7 @@ strtotime($form_add_bet['date_close']) < time()
               <tr class="history__item">
                 <td class="history__name"><?=$value['name']; ?></td>
                 <td class="history__price"><?=space_price($value['price_buy']); ?> р</td>
-                <td class="history__time"><?=$value['date_place']; ?></td>
+                <td class="history__time"><?=show_date_end_bet($value['date_place']); ?></td>
               </tr>
 
              <?php endforeach; ?>
@@ -92,9 +87,13 @@ strtotime($form_add_bet['date_close']) < time()
         <?php else: ?>
 
             <div class="lot-item__state">
-              <div class="lot-item__timer timer">
-                <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
-              </div>
+                <div class="lot-item__timer timer">
+                    <?php if ($time_finish): ?>
+                        Лот завершен
+                    <?php else: ?>
+                        <?=check_hakers(show_date_close($lot_select['date_close'])); ?>
+                    <?php endif; ?>
+                </div>
               <div class="lot-item__cost-state">
                 <div class="lot-item__rate">
                   <span class="lot-item__amount">Текущая цена</span>
@@ -106,7 +105,6 @@ strtotime($form_add_bet['date_close']) < time()
                 </div>
               </div>
             </div>
-
 
         </div>
       </div>

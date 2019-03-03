@@ -9,7 +9,6 @@ function return_name_title() {
     return $title;
 }
 
-
 function db_get_prepare_stmt($link, $sql, $data = []) {
     $stmt = mysqli_prepare($link, $sql);
 
@@ -52,7 +51,6 @@ function connect_to_db() {
 }
 
 function show_categories_select() {
-
     $link = connect_to_db();
 
     if($link) {
@@ -72,7 +70,6 @@ function show_categories_select() {
     return $categories_select;
 };
 
-
 function space_price($price) {
     $around_price = ceil($price);
     if ($around_price > 1000) {
@@ -86,10 +83,7 @@ function check_hakers($typing) {
     $haker = strip_tags($typing);
     return $haker;
 };
-function date_now() {
-    $date_now = date_create("now");
-    return $date_now;
-}
+
 function show_date() {
     $date_now = date_create("now");
     $date_next = date_create("tomorrow");
@@ -103,6 +97,32 @@ function show_date_close($date) {
     $date_next = strtotime($date);
     return floor(($date_next - $date_now) / 3600) . ':' . floor(($date_next - $date_now) % 3600 / 60);
 };
+
+function show_date_end_bet($time) {
+    $lot_time_sec = strtotime($time);
+    $secs_passed = strtotime('now') - $lot_time_sec;
+    $days = floor($secs_passed / 86400);
+
+    if ($days == 0) {
+        $hours = floor($secs_passed / 3600);
+        if ($hours > 0) {
+            $result = $hours . ' часов назад';
+            if (((($hours % 10) == 1 ) && ($hours != 11 )) || ($hours == 21)) {
+                $result = $hours . ' час назад';
+            } else if ((($hours > 1 ) && ($hours < 5)) || (( $hours >= 22) && ( $hours <=23 ))) {
+                $result = $hours . ' часа назад';
+            } else if (($hours >= 5) && ($hours < 21)) {
+                $result = $hours . ' часов назад';
+            }
+        }
+        $minutes = floor(($secs_passed % 3600)/60);
+        if ((($minutes % 10) == 1) && ($minutes != 11)) {
+            $result = $minutes . ' минуту назад';
+        }
+        $result = $minutes . ' минут(ы) назад';
+    } else $result = date_format(date_create($time), "d.m.y в H:i");
+    return $result;
+}
 
 function include_template($name, $data) {
     $name = 'templates/' . $name;
