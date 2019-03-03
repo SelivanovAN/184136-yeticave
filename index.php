@@ -4,10 +4,9 @@ setlocale(LC_ALL, 'ru_RU');
 
 include_once 'functions.php';
 
-$title = 'Главная';
-
 $link = connect_to_db();
 $title = return_name_title();
+
 $lots_select = [];
 
 if($link) {

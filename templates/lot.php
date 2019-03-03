@@ -45,11 +45,19 @@
                   <?php endif; ?>
               </div>
             </div>
-            <form class="lot-item__form" method="post" enctype="multipart/form-data">
-              <p class="lot-item__form-item form__item form__item--invalid">
+
+            <?php $form_classname = count($errors ?? []) ? "form--invalid" : ""; ?>
+
+            <form class="lot-item__form <?=$form_classname;?>" method="post" enctype="multipart/form-data">
+
+                <?php $classname = isset($errors['cost']) ? "form__item--invalid" : "";
+                $error_value = isset($errors['cost']) ? $errors['cost'] : "";
+                $value = isset($form_add_bet['cost']) ? $form_add_bet['cost'] : ""; ?>
+
+              <p class="lot-item__form-item form__item <?=$classname;?>">
                 <label for="cost">Ваша ставка</label>
-                <input id="cost" type="text" name="add_bet[cost]" placeholder="<?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?>">
-                <span class="form__error">Введите наименование лота</span>
+                <input id="cost" class="<?=$classname;?>" type="text" name="add_bet[cost]" placeholder="<?=space_price(check_hakers($lot_select['MAX(b.price_buy)'] + $lot_select['step_bet'])); ?>">
+                <span class="form__error <?=$classname;?>"><?=$error_value;?></span>
               </p>
               <button type="submit" class="button">Сделать ставку</button>
             </form>

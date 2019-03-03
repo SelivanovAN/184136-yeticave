@@ -4,27 +4,7 @@ setlocale(LC_ALL, 'ru_RU');
 include_once 'functions.php';
 
 $link = connect_to_db();
-
-$title = 'Главная';
-
-$categories_select = [];
-
-
-
-if($link) {
-    $categories_sql = 'SELECT * FROM category ORDER BY name ASC';
-    $result_select = mysqli_query($link, $categories_sql);
-
-    if ($result_select) {
-        $categories_select = mysqli_fetch_all($result_select, MYSQLI_ASSOC);
-    } else {
-        print ('Произошла ошибка при выполнении запроса! Обратитесь к администратору, либо попробуйте снова.');
-        die();
-    }
-} else {
-    print ('Произошла ошибка подключения, недоступна база данных! Обратитесь к администратору, либо попробуйте снова.');
-    die();
-}
+$title = return_name_title();
 
 if($link) {
 
@@ -62,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
 
 	foreach ($required as $field) {
 	    if (empty($form_add_bet[$field])) {
-	        $errors[$field] = 'Это поле надо заполнить';
+	        $errors[$field] = 'Это поле надо заполнить и оно не должно быть меньше минимальной ставки';
         }
     }
 
@@ -77,7 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
          $errors['cost'] = 'ставка не должа быть меньше текущей цены';
     }
 
-    if (count($errors) == 0) {
+    if (count($errors) != 0) {
+        $content_main = include_template('login.php', ['categories_select' => show_categories_select(), 'form_add_bet' => $form_add_bet, 'errors' => $errors]);
+    }
+    else {
         $bet_add = 'INSERT INTO bets (price_buy, id_user, id_lot) VALUES (?, ?, ?)';
         $stmt = db_get_prepare_stmt($link, $bet_add, [$form_add_bet['cost'], $_SESSION['user']['id'], $lot_id]);
         $res = mysqli_stmt_execute($stmt);
@@ -91,12 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
 }
 
 if ($lot_select) {
-    $content_main = include_template ('lot.php', ['categories_select' => $categories_select, 'lot_select' => $lot_select]);
+    $content_main = include_template ('lot.php', ['categories_select' => show_categories_select(), 'lot_select' => $lot_select]);
 } else {
-    $content_main = include_template ('error.php', ['categories_select' => $categories_select, 'lot_select' => $lot_select]);
+    $content_main = include_template ('error.php', ['categories_select' => show_categories_select(), 'lot_select' => $lot_select]);
 }
 
-$layout = include_template ('layout.php', ['title' => $title, 'categories_select' => $categories_select, 'content_main' => $content_main]);
+$layout = include_template ('layout.php', ['title' => $title['lot'], 'categories_select' => show_categories_select(), 'content_main' => $content_main]);
 
 print ($layout);
 

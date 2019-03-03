@@ -3,29 +3,8 @@ date_default_timezone_set("Europe/Moscow");
 setlocale(LC_ALL, 'ru_RU');
 include_once 'functions.php';
 
-$link = mysqli_connect('localhost', 'root', '', '184136_yeticave');
-mysqli_set_charset($link, "utf8");
-
-$title = 'Регистрация';
-$is_auth = rand(0, 1);
-$user_name = 'Александр';
-
-$categories_select = [];
-
-if($link) {
-    $categories_sql = 'SELECT * FROM category ORDER BY name ASC';
-    $result_select = mysqli_query($link, $categories_sql);
-
-    if ($result_select) {
-        $categories_select = mysqli_fetch_all($result_select, MYSQLI_ASSOC);
-    } else {
-        print ('Произошла ошибка при выполнении запроса! Обратитесь к администратору, либо попробуйте снова.');
-        die();
-    }
-} else {
-    print ('Произошла ошибка подключения, недоступна база данных! Обратитесь к администратору, либо попробуйте снова.');
-    die();
-}
+$link = connect_to_db();
+$title = return_name_title();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $reg = $_POST['signup'];
@@ -40,12 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-
     if (isset($_FILES['file-upload']['name']) && $_FILES['file-upload']['name']) {
 		$tmp_name = $_FILES['file-upload']['tmp_name'];
 
-        // $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    	// $file_type = finfo_file($finfo, $tmp_name);
+        // $finfo = finfo_open(FILEINFO_MIME_TYPE); $file_type = finfo_file($finfo, $tmp_name);
 
         $file_type = mime_content_type($tmp_name);
 
@@ -77,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
         if (count($errors) != 0) { // считает количество элементов в массиве
-            $content_main = include_template('sign-up.php', ['categories_select' => $categories_select, 'reg' => $reg, 'errors' => $errors, 'dict' => $dict]);
+            $content_main = include_template('sign-up.php', ['categories_select' => show_categories_select(), 'reg' => $reg, 'errors' => $errors, 'dict' => $dict]);
         }
         else {
             $password = password_hash($reg['password'], PASSWORD_DEFAULT);
@@ -94,10 +71,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 else {
-	$content_main = include_template('sign-up.php', ['categories_select' => $categories_select]);
+	$content_main = include_template('sign-up.php', ['categories_select' => show_categories_select()]);
 }
 
-$layout = include_template ('layout.php', ['title' => $title, 'categories_select' => $categories_select, 'content_main' => $content_main]);
+$layout = include_template ('layout.php', ['title' => $title['sign-up'], 'categories_select' => show_categories_select(), 'content_main' => $content_main]);
 
 print ($layout);
 
