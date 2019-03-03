@@ -86,7 +86,10 @@ function check_hakers($typing) {
     $haker = strip_tags($typing);
     return $haker;
 };
-
+function date_now() {
+    $date_now = date_create("now");
+    return $date_now;
+}
 function show_date() {
     $date_now = date_create("now");
     $date_next = date_create("tomorrow");
