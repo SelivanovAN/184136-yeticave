@@ -92,9 +92,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
 
 $time_finish = strtotime($lot_select['date_close']) < time();
 
-$bet_user = "SELECT * FROM bets WHERE id_user = ".$_SESSION['user']['id']." AND id_lot = $lot_id";
-$result_bet_user = mysqli_query($link, $bet_user);
-$user_has_bet = count(mysqli_fetch_array($result_bet_user, MYSQLI_ASSOC));
+if (isset($_SESSION['user']['id'])) {
+    $bet_user = "SELECT * FROM bets WHERE id_user = ".$_SESSION['user']['id']." AND id_lot = $lot_id";
+    $result_bet_user = mysqli_query($link, $bet_user);
+    $user_has_bet = count(mysqli_fetch_array($result_bet_user, MYSQLI_ASSOC) ?? []);
+}
+else {
+    $user_has_bet = false;
+}
 
 
 if ($lot_select) {

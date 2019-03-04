@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } // если пользователь не загрузил файл то это неошибка else {$errors['file-upload'] = 'Вы не загрузили файл'; }
 
     if (count($errors) != 0) { // считает количество элементов в массиве
-        $content_main = include_template('add.php', ['categories_select' => $categories_select, 'jpg' => $jpg, 'errors' => $errors, 'dict' => $dict]);
+        $content_main = include_template('add.php', ['categories_select' => show_categories_select(), 'jpg' => $jpg, 'errors' => $errors, 'dict' => $dict]);
     }
     else {
         $sql = 'INSERT INTO lots (date_create, name, description, picture_link, start_price, date_close, step_bet, id_user, id_category)

@@ -84,14 +84,6 @@ function check_hakers($typing) {
     return $haker;
 };
 
-function show_date() {
-    $date_now = date_create("now");
-    $date_next = date_create("tomorrow");
-    $date_diff = date_diff($date_next, $date_now);
-    $date_count = date_interval_format($date_diff, "%h:%i");
-    return $date_count;
-};
-
 function show_date_close($date) {
     $date_now = strtotime("now");
     $date_next = strtotime($date);
@@ -120,7 +112,10 @@ function show_date_end_bet($time) {
             $result = $minutes . ' минуту назад';
         }
         $result = $minutes . ' минут(ы) назад';
-    } else $result = date_format(date_create($time), "d.m.y в H:i");
+    }
+    else {
+        $result = date_format(date_create($time), "d.m.y в H:i");
+    }
     return $result;
 }
 
