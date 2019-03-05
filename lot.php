@@ -52,7 +52,7 @@ if($link) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
-	$form_add_bet = $_POST['add_bet'];
+	$form_add_bet = $_POST['add_bet'] ?? [];
 
 	$required = ['cost'];
     $dict = ['cost' => 'Ставка'];

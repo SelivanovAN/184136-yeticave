@@ -7,7 +7,7 @@ $link = connect_to_db();
 $title = return_name_title();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $jpg = $_POST['jpg'];
+    $jpg = $_POST['jpg'] ?? [];
 
     $required = ['name', 'category', 'description', 'start_price', 'step_bet', 'date_close'];
     $dict = ['name' => 'Название', 'category' => 'Категория', 'description' => 'Описание', 'start_price' => 'Начальная цена', 'step_bet' => 'Шаг ставки', 'date_close' => 'Дата окончания'];
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     if (isset($jpg['date_close'])) { //проверяет наличие ключа
-        $date_close = strtotime($jpg['date_close']);
+        $date_close = strtotime($jpg['date_close']) ?? [];
         $date_diff = $date_close - time();
 
         if ($date_diff < (60*60*24)) {

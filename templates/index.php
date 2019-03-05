@@ -28,7 +28,12 @@
                 <div class="lot__state">
                     <div class="lot__rate">
                         <span class="lot__amount">Стартовая цена</span>
-                        <span class="lot__cost"><?=check_hakers(space_price($value['start_price'])); ?></span>
+                        <?php if (!empty($value['MAX(b.price_buy)'])): ?>
+                           <span class="lot__cost"><?=check_hakers(space_price($value['MAX(b.price_buy)'])); ?></span>
+                       <?php else: ?>
+                           <span class="lot__cost"><?=check_hakers(space_price($value['start_price'])); ?></span>
+                       <?php endif; ?>
+                        <!--<span class="lot__cost"><?=check_hakers(space_price($value['start_price'])); ?></span>-->
                     </div>
                     <div class="lot__timer timer">
                         <?=show_date_close($value['date_close']); ?>
