@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     if (isset($jpg['date_close'])) { //проверяет наличие ключа
-        $date_close = strtotime($jpg['date_close']) ?? [];
-        $date_diff = $date_close - time();
+        $date_close = strtotime($jpg['date_close']);
+        $date_diff = ($date_close - time()) ?? [];
 
         if ($date_diff < (60*60*24)) {
             $errors['date_close'] = 'Дата должна быть больше текущей как минимум на одни сутки';
