@@ -25,10 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($date_diff < (60*60*24)) {
             $errors['date_close'] = 'Дата должна быть больше текущей как минимум на одни сутки';
         }
+        else if (strtotime($jpg['date_close']) > time() + (86400 * 365 * 20)) {
+            $errors['date_close'] = 'Вы ввели слишком позднюю дату';
+        }
     }
 
     if (isset($_FILES['file-upload']['name']) && $_FILES['file-upload']['name']) {
-		$tmp_name = $_FILES['file-upload']['tmp_name'];
+		$tmp_name = $_FILES['file-upload']['tmp_name'] ?? [];
 
         $file_type = mime_content_type($tmp_name);
 
@@ -41,6 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             move_uploaded_file($tmp_name, 'img/' . $filename);
         }
+    }
+    else {
+        $errors['file-upload'] = 'Вы не загрузили файл';
     } // если пользователь не загрузил файл то это неошибка else {$errors['file-upload'] = 'Вы не загрузили файл'; }
 
     if (count($errors) != 0) { // считает количество элементов в массиве
