@@ -5,8 +5,8 @@ INSERT INTO category (name, id_lot) VALUES ("одежда", 4);
 INSERT INTO category (name, id_lot) VALUES ("инструменты", 5);
 INSERT INTO category (name, id_lot) VALUES ("разное", 6);
 
-INSERT INTO users (email, name, password, avatar, contact) VALUES ("alex@mail.ru", "Alex", "$2y$10$xzwsFTXApYxfcz97l7vrIe0MHJoIEnGqq3u6AYS4XDyv4SRpSdQ8e", "pusto", "Moscow"); <!-- пароль 1 -->
-INSERT INTO users (email, name, password, avatar, contact) VALUES ("oleg@mail.ru", "Oleg", "$2y$10$0uBmOJ8G/SVslhk4RSawo.O23HxVK7fvCxZ91IloLa7xcBV7m7d.2", "pusto", "Piter"); <!-- пароль 2 -->
+INSERT INTO users (email, name, password, avatar, contact) VALUES ("alex@mail.ru", "Alex", "$2y$10$xzwsFTXApYxfcz97l7vrIe0MHJoIEnGqq3u6AYS4XDyv4SRpSdQ8e", "pusto", "Moscow");
+INSERT INTO users (email, name, password, avatar, contact) VALUES ("oleg@mail.ru", "Oleg", "$2y$10$0uBmOJ8G/SVslhk4RSawo.O23HxVK7fvCxZ91IloLa7xcBV7m7d.2", "pusto", "Piter");
 
 INSERT INTO lots (date_create, name, description, picture_link, start_price, date_close, step_bet, id_user, user_win, id_category)
  VALUES ("2019-01-01 01:01:00", "Snowboard", "2014 Rossignol District Snowboard", "img/lot-1.jpg", 10999, "2019-02-02 01:01:00", 100, 1, 1, 1);

@@ -7,7 +7,7 @@ $link = connect_to_db();
 $title = return_name_title();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $reg = $_POST['signup'];
+    $reg = $_POST['signup'] ?? [];
 
     $req_fields = ['email', 'password', 'name', 'message'];
     $dict = ['email' => 'Эл. почта', 'password' => 'Пароль', 'name' => 'Имя', 'message' => 'Контактные данные'];
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (isset($_FILES['file-upload']['name']) && $_FILES['file-upload']['name']) {
-		$tmp_name = $_FILES['file-upload']['tmp_name'];
+		$tmp_name = $_FILES['file-upload']['tmp_name'] ?? [];
 
         $file_type = mime_content_type($tmp_name);
 
