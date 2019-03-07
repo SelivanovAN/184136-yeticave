@@ -11,7 +11,7 @@ $lots_select = [];
 
 if($link) {
     $lots_sql = 'SELECT l.id, l.name, l.start_price, l.picture_link, MAX(b.price_buy), MAX(c.name), l.date_create, l.date_close, l.description
-    FROM lots l JOIN category c ON l.id_category = c.id LEFT JOIN bets b ON l.id = b.id WHERE l.date_close > NOW() GROUP BY l.id ORDER BY l.date_create DESC';
+    FROM lots l JOIN category c ON l.id_category = c.id LEFT JOIN bets b ON l.id = b.id_lot WHERE l.date_close > NOW() GROUP BY l.id ORDER BY l.date_create DESC';
 
     $result_select = mysqli_query($link, $lots_sql);
 
