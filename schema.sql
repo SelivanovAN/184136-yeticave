@@ -7,7 +7,7 @@ USE 184136_yeticave;
 CREATE TABLE category (
 id INT AUTO_INCREMENT PRIMARY KEY,
 name CHAR(128),
-id_lot INT
+css_class TEXT
 );
 
 CREATE TABLE lots (
@@ -23,8 +23,6 @@ id_user INT,
 user_win INT,
 id_category INT
 );
-
-CREATE INDEX n_lots ON lots(name);
 
 CREATE TABLE bets (
 id INT AUTO_INCREMENT PRIMARY KEY,

@@ -1,9 +1,9 @@
-INSERT INTO category (name, id_lot) VALUES ("доски и лыжи", 1);
-INSERT INTO category (name, id_lot) VALUES ("крепления", 2);
-INSERT INTO category (name, id_lot) VALUES ("ботинки", 3);
-INSERT INTO category (name, id_lot) VALUES ("одежда", 4);
-INSERT INTO category (name, id_lot) VALUES ("инструменты", 5);
-INSERT INTO category (name, id_lot) VALUES ("разное", 6);
+INSERT INTO category (name, css_class) VALUES ("доски и лыжи", "promo__item--boards");
+INSERT INTO category (name, css_class) VALUES ("крепления", "promo__item--attachment");
+INSERT INTO category (name, css_class) VALUES ("ботинки", "promo__item--boots");
+INSERT INTO category (name, css_class) VALUES ("одежда", "promo__item--clothing");
+INSERT INTO category (name, css_class) VALUES ("инструменты", "promo__item--tools");
+INSERT INTO category (name, css_class) VALUES ("разное", "promo__item--other");
 
 INSERT INTO users (email, name, password, avatar, contact) VALUES ("alex@mail.ru", "Alex", "$2y$10$xzwsFTXApYxfcz97l7vrIe0MHJoIEnGqq3u6AYS4XDyv4SRpSdQ8e", "pusto", "Moscow");
 INSERT INTO users (email, name, password, avatar, contact) VALUES ("oleg@mail.ru", "Oleg", "$2y$10$0uBmOJ8G/SVslhk4RSawo.O23HxVK7fvCxZ91IloLa7xcBV7m7d.2", "pusto", "Piter");
@@ -29,7 +29,7 @@ INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-02-09 01
 INSERT INTO bets (date_place, price_buy, id_user, id_lot) VALUES ("2019-07-07 01:01:00", 6500, 2, 6);
 
 SELECT * FROM category ORDER BY name ASC;
-SELECT l.id, l.name, l.start_price, l.picture_link, MAX(b.price_buy), MAX(c.name), l.date_create, l.date_close, l.description FROM lots l JOIN category c ON l.id_category = c.id_lot JOIN bets b ON l.id = b.id_lot GROUP BY l.id ORDER BY l.date_create DESC;
-SELECT l.id, c.name FROM lots l JOIN category c ON l.id_category = c.id_lot;
+SELECT l.id, l.name, l.start_price, l.picture_link, MAX(b.price_buy), MAX(c.name), l.date_create, l.date_close, l.description FROM lots l JOIN category c ON l.id_category = c.id JOIN bets b ON l.id = b.id_lot GROUP BY l.id ORDER BY l.date_create DESC;
+SELECT l.id, c.name FROM lots l JOIN category c ON l.id_category = c.id;
 UPDATE lots SET name = "Snowboard-test" WHERE id = 1;
 SELECT b.id, b.date_place, l.name FROM bets b JOIN lots l ON l.id = b.id_lot ORDER BY b.date_place DESC;

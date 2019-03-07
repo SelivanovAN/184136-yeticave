@@ -14,7 +14,8 @@ if($link) {
             $lot_id = (int)$_GET['value_id'];
         }
 
-    $lot_sql = 'SELECT l.id, l.name, l.start_price, l.picture_link, MAX(b.price_buy), MAX(c.name), l.date_create, l.description, l.step_bet, l.date_close, l.id_user FROM lots l JOIN category c ON l.id_category = c.id_lot LEFT JOIN bets b ON l.id = b.id_lot WHERE l.id = '.$lot_id.' GROUP BY l.id';
+    $lot_sql = 'SELECT l.id, l.name, l.start_price, l.picture_link, MAX(b.price_buy), MAX(c.name), l.date_create, l.description, l.step_bet, l.date_close, l.id_user
+    FROM lots l JOIN category c ON l.id_category = c.id LEFT JOIN bets b ON l.id = b.id WHERE l.id = '.$lot_id.' GROUP BY l.id';
     $result_select = mysqli_query($link, $lot_sql);
 
     if ($result_select) {
@@ -71,14 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
         $current_bet = $lot_select['start_price'] + $lot_select['step_bet'];
     }
 
-    if ($form_add_bet['cost'] < $current_bet && !count($errors)) {
+    if (!count($errors) && $form_add_bet['cost'] < $current_bet) {
          $errors['cost'] = 'ставка не должа быть меньше текущей цены';
     }
 
-    if (count($errors) != 0) {
-        $content_main = include_template('lot.php', ['categories_select' => show_categories_select(), 'form_add_bet' => $form_add_bet, 'errors' => $errors, 'dict' => $dict, 'bets_select' => $bets_select]);
-    }
-    else {
+    if (count($errors) == 0) {
         $bet_add = 'INSERT INTO bets (price_buy, id_user, id_lot) VALUES (?, ?, ?)';
         $stmt = db_get_prepare_stmt($link, $bet_add, [$form_add_bet['cost'], $_SESSION['user']['id'], $lot_id]);
         $res = mysqli_stmt_execute($stmt);
