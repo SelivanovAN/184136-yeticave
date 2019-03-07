@@ -6,7 +6,8 @@ USE 184136_yeticave;
 
 CREATE TABLE category (
 id INT AUTO_INCREMENT PRIMARY KEY,
-name CHAR(128)
+name CHAR(128),
+css_class TEXT
 );
 
 CREATE TABLE lots (
