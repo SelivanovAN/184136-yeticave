@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
         $current_bet = $lot_select['start_price'] + $lot_select['step_bet'];
     }
 
-    if ($form_add_bet['cost'] < $current_bet && !count($errors)) {
+    if (!count($errors) && $form_add_bet['cost'] < $current_bet) {
          $errors['cost'] = 'ставка не должа быть меньше текущей цены';
     }
 
