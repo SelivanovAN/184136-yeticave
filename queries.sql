@@ -1,9 +1,9 @@
-INSERT INTO category (name) VALUES ("доски и лыжи");
-INSERT INTO category (name) VALUES ("крепления");
-INSERT INTO category (name) VALUES ("ботинки");
-INSERT INTO category (name) VALUES ("одежда");
-INSERT INTO category (name) VALUES ("инструменты");
-INSERT INTO category (name) VALUES ("разное");
+INSERT INTO category (name, css_class) VALUES ("доски и лыжи", "promo__item--boards");
+INSERT INTO category (name, css_class) VALUES ("крепления", "promo__item--attachment");
+INSERT INTO category (name, css_class) VALUES ("ботинки", "promo__item--boots");
+INSERT INTO category (name, css_class) VALUES ("одежда", "promo__item--clothing");
+INSERT INTO category (name, css_class) VALUES ("инструменты", "promo__item--tools");
+INSERT INTO category (name, css_class) VALUES ("разное", "promo__item--other");
 
 INSERT INTO users (email, name, password, avatar, contact) VALUES ("alex@mail.ru", "Alex", "$2y$10$xzwsFTXApYxfcz97l7vrIe0MHJoIEnGqq3u6AYS4XDyv4SRpSdQ8e", "pusto", "Moscow");
 INSERT INTO users (email, name, password, avatar, contact) VALUES ("oleg@mail.ru", "Oleg", "$2y$10$0uBmOJ8G/SVslhk4RSawo.O23HxVK7fvCxZ91IloLa7xcBV7m7d.2", "pusto", "Piter");
