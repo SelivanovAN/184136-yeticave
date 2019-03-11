@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		  . "JOIN users ON gifs.user_id = users.id "
 		  . "WHERE MATCH(title, description) AGAINST(?)";*/
 
-		$stmt = db_get_prepare_stmt($link, $lots_sql, [$form_search]);
+		$stmt = db_get_prepare_stmt($link, $lots_sql, [$form_search['search']]);
 		mysqli_stmt_execute($stmt);
 		$result = mysqli_stmt_get_result($stmt);
 
