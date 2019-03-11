@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 session_start();
 
 function return_name_title() {
-    $title = ['index' => 'Главная', 'add' => 'Добавление', 'lot' => 'Лот', 'sign-up' => 'Регистрация', 'login' => 'Вход',];
+    $title = ['index' => 'Главная', 'add' => 'Добавление', 'lot' => 'Лот', 'sign-up' => 'Регистрация', 'login' => 'Вход', 'search' => 'Поиск лота'];
     return $title;
 }
 
