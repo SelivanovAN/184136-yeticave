@@ -28,6 +28,7 @@ if($link) {
 }
 
 $content_main = include_template ('index.php', ['categories_select' => show_categories_select(), 'lots_select' => $lots_select]);
+
 $layout = include_template ('layout.php', ['title' => $title['index'], 'categories_select' => show_categories_select(), 'content_main' => $content_main]);
 
 print ($layout);

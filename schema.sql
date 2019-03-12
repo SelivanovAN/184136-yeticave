@@ -24,6 +24,8 @@ user_win INT,
 id_category INT
 );
 
+CREATE FULLTEXT INDEX lots_search ON lots(name, description);
+
 CREATE TABLE bets (
 id INT AUTO_INCREMENT PRIMARY KEY,
 date_place TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
