@@ -7,13 +7,14 @@ $link = connect_to_db();
 $title = return_name_title();
 
 
-	$form_search = $_GET['search'] ?? '';
+	$form_search = trim($_GET['search'] ?? '');
 
     $lots_select = [];
 
 	if ($form_search) {
         $lots_sql = "SELECT l.id, l.name, l.start_price, l.picture_link, MAX(b.price_buy), MAX(c.name), l.date_create, l.date_close, l.description
-        FROM lots l JOIN category c ON l.id_category = c.id LEFT JOIN bets b ON l.id = b.id_lot WHERE l.date_close > NOW() AND MATCH(l.name, l.description) AGAINST(?) GROUP BY l.id ORDER BY l.date_create DESC";
+        FROM lots l JOIN category c ON l.id_category = c.id LEFT JOIN bets b ON l.id = b.id_lot WHERE l.date_close > NOW() AND MATCH(l.name, l.description) AGAINST(?)
+        GROUP BY l.id ORDER BY l.date_create DESC LIMIT . $page_items . ' OFFSET ' . $offset";
 
 
 

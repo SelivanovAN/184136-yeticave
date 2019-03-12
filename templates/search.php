@@ -12,7 +12,7 @@
     <div class="container">
       <section class="lots">
 
-        <h2>Результаты поиска по запросу «<span><?=$form_search; ?></span>»</h2>
+        <h2>Результаты поиска по запросу «<span><?=check_hakers($form_search); ?></span>»</h2>
 
         <ul class="lots__list">
 
@@ -53,6 +53,21 @@
             <?php endif; ?>
         </ul>
       </section>
+
+      <?php if ($pages_count > 1): ?>
+          <!--<div class="pagination">-->>
+              <ul class="pagination-list">
+                  <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
+
+                  <?php foreach ($pages as $page): ?>
+                      <li class="pagination-item <?php if ($page == $cur_page): ?>pagination-item-active<?php endif; ?>"><a href="/?page=<?=$page;?>"><?=$page;?></a></li>
+                  <?php endforeach; ?>
+
+                  <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
+              </ul>
+          <!--</div>-->
+      <?php endif; ?>
+<!--
       <ul class="pagination-list">
         <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
         <li class="pagination-item pagination-item-active"><a>1</a></li>
@@ -61,6 +76,7 @@
         <li class="pagination-item"><a href="#">4</a></li>
         <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
       </ul>
+  -->
     </div>
   </main>
 
