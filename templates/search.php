@@ -11,36 +11,46 @@
 
     <div class="container">
       <section class="lots">
-        <h2>Результаты поиска по запросу «<span>Union</span>»</h2>
+
+        <h2>Результаты поиска по запросу «<span><?=$form_search; ?></span>»</h2>
+
         <ul class="lots__list">
 
-          <?php foreach ($lots_select as $value): ?>
-              <li class="lots__item lot">
-                <div class="lot__image">
-                  <img src="<?=check_hakers($value['picture_link']); ?>" width="350" height="260" alt="Сноуборд">
-                </div>
-                <div class="lot__info">
-                  <span class="lot__category"><?=check_hakers($value['MAX(c.name)']); ?></span>
-                  <h3 class="lot__title"><a class="text-link" href="lot.php?value_id=<?=$value['id']; ?>"><?=check_hakers($value['description']); ?></a></h3>
-                  <div class="lot__state">
-                    <div class="lot__rate">
-                      <span class="lot__amount">Стартовая цена</span>
+            <?php if (count($lots_select)): ?>
 
-                      <?php if (!empty($value['MAX(b.price_buy)'])): ?>
-                         <span class="lot__cost"><?=check_hakers(space_price($value['MAX(b.price_buy)'])); ?></span>
-                     <?php else: ?>
-                         <span class="lot__cost"><?=check_hakers(space_price($value['start_price'])); ?></span>
-                     <?php endif; ?>
+                <?php foreach ($lots_select as $value): ?>
+                    <li class="lots__item lot">
+                      <div class="lot__image">
+                        <img src="<?=check_hakers($value['picture_link']); ?>" width="350" height="260" alt="Сноуборд">
+                      </div>
+                      <div class="lot__info">
+                        <span class="lot__category"><?=check_hakers($value['MAX(c.name)']); ?></span>
+                        <h3 class="lot__title"><a class="text-link" href="lot.php?value_id=<?=$value['id']; ?>"><?=check_hakers($value['name']); ?></a></h3>
+                        <div class="lot__state">
+                          <div class="lot__rate">
+                            <span class="lot__amount">Стартовая цена</span>
 
-                    </div>
-                    <div class="lot__timer timer"> <!-- timer--finishing -->
-                        <?=show_date_close($value['date_close']); ?>
-                    </div>
-                  </div>
-                </div>
-              </li>
-      <?php endforeach; ?>
+                            <?php if (!empty($value['MAX(b.price_buy)'])): ?>
+                               <span class="lot__cost"><?=check_hakers(space_price($value['MAX(b.price_buy)'])); ?></span>
+                           <?php else: ?>
+                               <span class="lot__cost"><?=check_hakers(space_price($value['start_price'])); ?></span>
+                           <?php endif; ?>
 
+                          </div>
+                          <div class="lot__timer timer"> <!-- timer--finishing -->
+                              <?=show_date_close($value['date_close']); ?>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+
+            <?php endforeach; ?>
+
+            <?php else: ?>
+
+                <p>Ничего не найдено по вашему запросу</p>
+
+            <?php endif; ?>
         </ul>
       </section>
       <ul class="pagination-list">
