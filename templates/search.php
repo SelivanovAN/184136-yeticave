@@ -12,13 +12,13 @@
     <div class="container">
       <section class="lots">
 
-        <h2>Результаты поиска по запросу «<span><?=$form_search; ?></span>»</h2>
+        <h2>Результаты поиска по запросу «<span><?=check_hakers($form_search); ?></span>»</h2>
 
         <ul class="lots__list">
 
-            <?php if (count($lots_select)): ?>
+            <?php if (count($result_lots_pagination_sql)): ?>
 
-                <?php foreach ($lots_select as $value): ?>
+                <?php foreach ($result_lots_pagination_sql as $value): ?>
                     <li class="lots__item lot">
                       <div class="lot__image">
                         <img src="<?=check_hakers($value['picture_link']); ?>" width="350" height="260" alt="Сноуборд">
@@ -53,6 +53,23 @@
             <?php endif; ?>
         </ul>
       </section>
+
+      <?php if ($tpl_data['pages_count'] > 1): ?>
+          <!--<div class="pagination">-->
+              <ul class="pagination-list">
+                  <li class="pagination-item pagination-item-prev"><a href="/search.php?search=<?=check_hakers($form_search); ?>&page=1">Назад</a></li>
+
+                  <?php foreach ($tpl_data['pages'] as $page): ?>
+                      <li class="pagination-item <?php if ($page === $tpl_data['cur_page']): ?>pagination-item-active<?php endif; ?>">
+                          <a href="/search.php?search=<?=check_hakers($form_search); ?>&page=<?=$page;?>"><?=$page;?></a>
+                      </li>
+                  <?php endforeach; ?>
+
+                  <li class="pagination-item pagination-item-next"><a href="/search.php?search=<?=check_hakers($form_search); ?>&page=<?=$tpl_data['pages_count'];?>">Вперед</a></li>
+              </ul>
+          <!--</div>-->
+      <?php endif; ?>
+<!--
       <ul class="pagination-list">
         <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
         <li class="pagination-item pagination-item-active"><a>1</a></li>
@@ -61,6 +78,7 @@
         <li class="pagination-item"><a href="#">4</a></li>
         <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
       </ul>
+  -->
     </div>
   </main>
 

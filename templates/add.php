@@ -36,7 +36,7 @@
           <select id="category" name="jpg[category]">
               <option value="">Выберите категорию</option>
               <?php foreach ($categories_select as $val): ?>
-                  <option <?=$value==$val['id'] ? "selected": ""; ?> value="<?=$val['id']; ?>"><?=$val['name']; ?></option>
+                  <option <?=$value===$val['id'] ? "selected": ""; ?> value="<?=$val['id']; ?>"><?=$val['name']; ?></option>
               <?php endforeach; ?>
           </select>
           <span class="form__error"><?=$error_value;?></span>
