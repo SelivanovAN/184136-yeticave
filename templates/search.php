@@ -16,9 +16,9 @@
 
         <ul class="lots__list">
 
-            <?php if (count($lots_select)): ?>
+            <?php if (count($result_lots_pagination_sql)): ?>
 
-                <?php foreach ($lots_select as $value): ?>
+                <?php foreach ($result_lots_pagination_sql as $value): ?>
                     <li class="lots__item lot">
                       <div class="lot__image">
                         <img src="<?=check_hakers($value['picture_link']); ?>" width="350" height="260" alt="Сноуборд">
@@ -54,13 +54,13 @@
         </ul>
       </section>
 
-      <?php if ($pages_count > 1): ?>
+      <?php if ($tpl_data['pages_count'] > 1): ?>
           <!--<div class="pagination">-->>
               <ul class="pagination-list">
                   <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
 
-                  <?php foreach ($pages as $page): ?>
-                      <li class="pagination-item <?php if ($page == $cur_page): ?>pagination-item-active<?php endif; ?>"><a href="/?page=<?=$page;?>"><?=$page;?></a></li>
+                  <?php foreach ($tpl_data['pages'] as $page): ?>
+                      <li class="pagination-item <?php if ($page == $tpl_data['cur_page']): ?>pagination-item-active<?php endif; ?>"><a href="/?page=<?=$page;?>"><?=$page;?></a></li>
                   <?php endforeach; ?>
 
                   <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
