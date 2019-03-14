@@ -6,7 +6,7 @@ include_once 'functions.php';
 $link = connect_to_db();
 $title = return_name_title();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $reg = $_POST['signup'] ?? [];
 
     $req_fields = ['email', 'password', 'name', 'message'];

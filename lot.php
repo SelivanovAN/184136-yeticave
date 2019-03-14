@@ -52,7 +52,7 @@ if($link) {
     die();
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user'])) {
 	$form_add_bet = $_POST['add_bet'] ?? [];
 
 	$required = ['cost'];
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user'])) {
          $errors['cost'] = 'ставка не должа быть меньше текущей цены';
     }
 
-    if (count($errors) == 0) {
+    if (count($errors) === 0) {
         $bet_add = 'INSERT INTO bets (price_buy, id_user, id_lot) VALUES (?, ?, ?)';
         $stmt = db_get_prepare_stmt($link, $bet_add, [$form_add_bet['cost'], $_SESSION['user']['id'], $lot_id]);
         $res = mysqli_stmt_execute($stmt);

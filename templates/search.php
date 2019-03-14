@@ -55,15 +55,17 @@
       </section>
 
       <?php if ($tpl_data['pages_count'] > 1): ?>
-          <!--<div class="pagination">-->>
+          <!--<div class="pagination">-->
               <ul class="pagination-list">
-                  <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
+                  <li class="pagination-item pagination-item-prev"><a href="/search.php?search=<?=check_hakers($form_search); ?>&page=1">Назад</a></li>
 
                   <?php foreach ($tpl_data['pages'] as $page): ?>
-                      <li class="pagination-item <?php if ($page == $tpl_data['cur_page']): ?>pagination-item-active<?php endif; ?>"><a href="/?page=<?=$page;?>"><?=$page;?></a></li>
+                      <li class="pagination-item <?php if ($page === $tpl_data['cur_page']): ?>pagination-item-active<?php endif; ?>">
+                          <a href="/search.php?search=<?=check_hakers($form_search); ?>&page=<?=$page;?>"><?=$page;?></a>
+                      </li>
                   <?php endforeach; ?>
 
-                  <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
+                  <li class="pagination-item pagination-item-next"><a href="/search.php?search=<?=check_hakers($form_search); ?>&page=<?=$tpl_data['pages_count'];?>">Вперед</a></li>
               </ul>
           <!--</div>-->
       <?php endif; ?>

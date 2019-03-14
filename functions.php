@@ -4,11 +4,20 @@ ini_set('display_errors', 1);
 
 session_start();
 
+/**
+ * @return array
+ */
 function return_name_title() {
     $title = ['index' => 'Главная', 'add' => 'Добавление', 'lot' => 'Лот', 'sign-up' => 'Регистрация', 'login' => 'Вход', 'search' => 'Поиск лота'];
     return $title;
 }
 
+/**
+ * @param $link
+ * @param $sql
+ * @param array $data
+ * @return bool|mysqli_stmt
+ */
 function db_get_prepare_stmt($link, $sql, $data = []) {
     $stmt = mysqli_prepare($link, $sql);
 
@@ -43,6 +52,9 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
     return $stmt;
 }
 
+/**
+ * @return mysqli
+ */
 function connect_to_db() {
     $link = mysqli_connect('localhost', 'root', '', '184136_yeticave');
     mysqli_set_charset($link, "utf8");
@@ -50,6 +62,9 @@ function connect_to_db() {
     return $link;
 }
 
+/**
+ * @return array|null
+ */
 function show_categories_select() {
     $link = connect_to_db();
 
@@ -70,6 +85,10 @@ function show_categories_select() {
     return $categories_select;
 };
 
+/**
+ * @param $price
+ * @return string
+ */
 function space_price($price) {
     $around_price = ceil($price);
     if ($around_price > 1000) {
@@ -79,27 +98,39 @@ function space_price($price) {
     return $around_price ." ₽";
 };
 
+/**
+ * @param $typing
+ * @return string
+ */
 function check_hakers($typing) {
     $haker = strip_tags($typing);
     return $haker;
 };
 
+/**
+ * @param $date
+ * @return string
+ */
 function show_date_close($date) {
     $date_now = strtotime("now");
     $date_next = strtotime($date);
     return floor(($date_next - $date_now) / 3600) . ':' . floor(($date_next - $date_now) % 3600 / 60);
 };
 
+/**
+ * @param $time
+ * @return false|string
+ */
 function show_date_end_bet($time) {
     $lot_time_sec = strtotime($time);
     $secs_passed = strtotime('now') - $lot_time_sec;
     $days = floor($secs_passed / 86400);
 
-    if ($days == 0) {
+    if ($days === 0) {
         $hours = floor($secs_passed / 3600);
         if ($hours > 0) {
             $result = $hours . ' часов назад';
-            if (((($hours % 10) == 1 ) && ($hours != 11 )) || ($hours == 21)) {
+            if (((($hours % 10) === 1 ) && ($hours != 11 )) || ($hours === 21)) {
                 $result = $hours . ' час назад';
             } else if ((($hours > 1 ) && ($hours < 5)) || (( $hours >= 22) && ( $hours <=23 ))) {
                 $result = $hours . ' часа назад';
@@ -108,7 +139,7 @@ function show_date_end_bet($time) {
             }
         }
         $minutes = floor(($secs_passed % 3600)/60);
-        if ((($minutes % 10) == 1) && ($minutes != 11)) {
+        if ((($minutes % 10) === 1) && ($minutes != 11)) {
             $result = $minutes . ' минуту назад';
         }
         $result = $minutes . ' минут(ы) назад';
@@ -119,6 +150,11 @@ function show_date_end_bet($time) {
     return $result;
 }
 
+/**
+ * @param $name
+ * @param $data
+ * @return false|string
+ */
 function include_template($name, $data) {
     $name = 'templates/' . $name;
     $result = '';
